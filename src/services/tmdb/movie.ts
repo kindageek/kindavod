@@ -3,7 +3,7 @@ import { MovieDetails, MovieListResponse } from '@/types/tmdb/movie';
 const DEFAULT_PARAMS = 'language=en-US';
 const DEFAULT_REQUEST_OPTIONS = {
   headers: {
-    Authorization: `Bearer ${env.TMDB_API_READ_ACCESS_TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN}`,
   },
 };
 
@@ -12,7 +12,7 @@ export async function getPopularMovies(params: {
 }): Promise<MovieListResponse | null> {
   try {
     const res = await fetch(
-      `${env.TMDB_API_URL}/movie/popular?${DEFAULT_PARAMS}&page=${params.page}`,
+      `${process.env.NEXT_PUBLIC_TMDB_API_URL}/movie/popular?${DEFAULT_PARAMS}&page=${params.page}`,
       {
         ...DEFAULT_REQUEST_OPTIONS,
       }
@@ -33,7 +33,7 @@ export async function getMovieDetailsById(
 ): Promise<MovieDetails | null> {
   try {
     const res = await fetch(
-      `${env.TMDB_API_URL}/movie/${movieId}?${DEFAULT_PARAMS}`,
+      `${process.env.NEXT_PUBLIC_TMDB_API_URL}/movie/${movieId}?${DEFAULT_PARAMS}`,
       {
         ...DEFAULT_REQUEST_OPTIONS,
       }

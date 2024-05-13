@@ -12,10 +12,11 @@ export const env = createEnv({
     NEXT_PUBLIC_VIDSRC_URL: z.string().url(),
   },
   runtimeEnv: {
-    TMDB_API_KEY: process.env.TMDB_API_KEY,
-    TMDB_API_URL: process.env.TMDB_API_URL,
-    TMDB_IMAGE_URL: process.env.TMDB_IMAGE_URL,
-    TMDB_API_READ_ACCESS_TOKEN: process.env.TMDB_API_READ_ACCESS_TOKEN,
+    TMDB_API_KEY: process.env.NEXT_PUBLIC_TMDB_API_KEY,
+    TMDB_API_URL: process.env.NEXT_PUBLIC_TMDB_API_URL,
+    TMDB_IMAGE_URL: process.env.NEXT_PUBLIC_TMDB_IMAGE_URL,
+    TMDB_API_READ_ACCESS_TOKEN:
+      process.env.NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN,
     NEXT_PUBLIC_VIDSRC_URL: process.env.NEXT_PUBLIC_VIDSRC_URL,
   },
 });
