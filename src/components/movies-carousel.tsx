@@ -12,7 +12,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import { useEffect } from 'react';
 import { Skeleton } from './ui/skeleton';
-import { MovieDetails } from '@/types/tmdb/movie';
 
 export default function MoviesCarousel({
   data,

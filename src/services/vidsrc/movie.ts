@@ -1,11 +1,12 @@
-import { env } from '@/env';
 import { LatestItemsListResponse } from '@/types/vidsrc';
 
 export async function getLatestMovies(params?: {
   page: number;
 }): Promise<LatestItemsListResponse | null> {
   try {
-    const res = await fetch(`${env.NEXT_PUBLIC_VIDSRC_URL}/vapi/movie/new`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/movie/new`
+    );
     if (!res.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -21,7 +22,9 @@ export async function getRecentlyAddedMovies(params?: {
   page: number;
 }): Promise<LatestItemsListResponse | null> {
   try {
-    const res = await fetch(`${env.NEXT_PUBLIC_VIDSRC_URL}/vapi/movie/add`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/movie/add`
+    );
     if (!res.ok) {
       throw new Error('Failed to fetch data');
     }

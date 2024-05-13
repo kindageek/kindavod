@@ -1,4 +1,3 @@
-import { env } from '@/env';
 import VideoPlayer from './video-player';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import Link from 'next/link';
@@ -18,7 +17,7 @@ export default async function MoviePage({
       <BackButtonLink />
       <img
         className='w-screen h-full object-cover absolute top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
-        src={`${env.TMDB_IMAGE_URL}${data.backdrop_path}`}
+        src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${data.backdrop_path}`}
         alt={data.title}
       />
       <Link

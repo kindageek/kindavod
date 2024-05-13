@@ -1,4 +1,3 @@
-import { env } from '@/env';
 import { MovieDetails, MovieListResponse } from '@/types/tmdb/movie';
 const DEFAULT_PARAMS = 'language=en-US';
 const DEFAULT_REQUEST_OPTIONS = {
