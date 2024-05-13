@@ -4,13 +4,6 @@ import {
   getRecentlyAddedMovies,
 } from '@/services/vidsrc/movie';
 import Link from 'next/link';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 import MoviesCarousel from '@/components/movies-carousel';
 
 export const revalidate = 0;
