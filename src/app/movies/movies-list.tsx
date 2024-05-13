@@ -26,7 +26,7 @@ export default function MoviesList() {
   return (
     <div className='flex flex-col items-center justify-between h-full gap-10'>
       <MoviesListPagination currentPage={page} />
-      <div className='grid grid-cols-5 gap-4'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
         {isFetching &&
           Array.from({ length: 20 }).map((_, index) => (
             <Skeleton key={index} className='w-48 h-72' />
@@ -36,7 +36,7 @@ export default function MoviesList() {
             <Link
               key={movie.id}
               href={`/movies/${movie.id}`}
-              className='flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out w-48 h-72'
+              className='flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out w-full'
             >
               <img
                 className='w-full object-cover rounded'
