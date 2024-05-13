@@ -2,7 +2,7 @@ import { env } from '@/env';
 import VideoPlayer from './video-player';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import BackButtonLink from '@/components/back-button-link';
 
 export default async function MoviePage({
   params: { movieId },
@@ -15,9 +15,7 @@ export default async function MoviePage({
   }
   return (
     <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-24'>
-      <Button asChild variant='link'>
-        <Link href='/'>Back</Link>
-      </Button>
+      <BackButtonLink />
       <img
         className='w-screen h-full object-cover absolute top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
         src={`${env.TMDB_IMAGE_URL}${data.backdrop_path}`}
