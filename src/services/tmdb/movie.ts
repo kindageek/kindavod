@@ -2,7 +2,7 @@ import { MovieDetails, MovieListResponse } from '@/types/tmdb/movie';
 const DEFAULT_PARAMS = 'language=en-US';
 const DEFAULT_REQUEST_OPTIONS = {
   headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_READ_ACCESS_TOKEN}`,
+    Authorization: `Bearer ${process.env.TMDB_API_READ_ACCESS_TOKEN}`,
   },
 };
 
