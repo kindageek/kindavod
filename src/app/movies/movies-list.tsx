@@ -36,7 +36,7 @@ export default function MoviesList() {
             <Link
               key={movie.id}
               href={`/movies/${movie.id}`}
-              className='min-h-72 flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out w-full'
+              className='flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out w-full'
             >
               <img
                 className='w-full object-cover rounded'

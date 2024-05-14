@@ -6,7 +6,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getBaseUrlPrefix() {
-  return typeof window === 'undefined'
-    ? `${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : '';
+  if (typeof window !== 'undefined') return '';
+  const protocol =
+    process.env.NODE_ENV === 'development' ? 'http://' : 'https://';
+
+  return `${protocol}${process.env.NEXT_PUBLIC_VERCEL_URL}`;
 }
