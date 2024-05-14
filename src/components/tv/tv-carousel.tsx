@@ -11,33 +11,35 @@ import { LatestItemsListResponse } from '@/types/vidsrc';
 import { useQuery } from '@tanstack/react-query';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import { useEffect } from 'react';
-import { Skeleton } from './ui/skeleton';
+import { Skeleton } from '../ui/skeleton';
 import { MovieDetails } from '@/types/tmdb/movie';
 import Image from 'next/image';
+import { getTvShowDetailsById } from '@/services/tmdb/tv';
+import { TvShowDetails } from '@/types/tmdb/tv';
 
 const POSTER_SIZES = { width: 144, height: 216 };
 
-export default function MoviesCarousel({
+export default function TvShowsCarousel({
   data,
 }: {
   data: LatestItemsListResponse | null;
 }) {
   const {
-    data: movieDetails,
+    data: list,
     isFetching,
     refetch,
     isFetched,
   } = useQuery({
-    queryKey: ['movies-details', JSON.stringify(data)],
+    queryKey: ['tv-shows-details', JSON.stringify(data)],
     queryFn: async () => {
       if (!data) return [];
       const res = await Promise.allSettled(
-        data.result.items.map((movie) => getMovieDetailsById(movie.tmdb_id))
+        data.result.items.map((item) => getTvShowDetailsById(item.tmdb_id))
       );
       const fulfilled = res.filter(
         (r) => r.status === 'fulfilled'
-      ) as PromiseFulfilledResult<MovieDetails | null>[];
-      return fulfilled.map((r) => r.value).filter((movie) => movie !== null);
+      ) as PromiseFulfilledResult<TvShowDetails | null>[];
+      return fulfilled.map((r) => r.value).filter((item) => item !== null);
     },
     enabled: !!data,
     initialData: [],
@@ -52,7 +54,7 @@ export default function MoviesCarousel({
 
   if (!data && isFetched) return null;
 
-  if (isFetched && !movieDetails.length) {
+  if (isFetched && !list.length) {
     return <p>No movies found</p>;
   }
 
@@ -84,29 +86,33 @@ export default function MoviesCarousel({
               </div>
             </CarouselItem>
           ))}
-        {movieDetails.map((movie) =>
-          movie ? (
-            <CarouselItem key={movie.id} className='basis-1/8'>
+        {list.map((item) =>
+          item ? (
+            <CarouselItem key={item.id} className='basis-1/8'>
               <Link
-                key={movie.id}
-                href={`/movies/${movie.id}`}
+                key={item.id}
+                href={`/movies/${item.id}`}
                 className={`group flex flex-col items-center gap-2 w-[${POSTER_SIZES.width}px] max-w-[${POSTER_SIZES.width}px]`}
               >
                 <Image
                   width={POSTER_SIZES.width}
                   height={POSTER_SIZES.height}
                   className='rounded group-hover:opacity-75 group-hover:scale-[1.025] transition-all duration-300 ease-in-out'
-                  src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`}
-                  alt={movie.title}
+                  src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${item.poster_path}`}
+                  alt={item.name}
                 />
                 <div className='w-full flex flex-col text-center p-0.5'>
-                  <p className='text-xs font-bold'>{movie.title}</p>
+                  <p className='text-xs font-bold'>{item.name}</p>
                   <p className='text-xs'>
-                    {new Date(movie.release_date).getFullYear()}
+                    {`${new Date(
+                      item.first_air_date
+                    ).getFullYear()} - ${new Date(
+                      item.last_air_date
+                    ).getFullYear()}`}
                     {', '}
-                    {movie.production_countries[0]?.name}
+                    {item.production_countries[0]?.name}
                     {', '}
-                    {movie.genres[0]?.name}
+                    {item.genres[0]?.name}
                   </p>
                 </div>
               </Link>

@@ -1,4 +1,5 @@
 import MoviesCarouselTabs from '@/components/movies-carousel-tabs';
+import TvShowsCarouselTabs from '@/components/tv/tv-carousel-tabs';
 
 export const revalidate = 0;
 
@@ -10,6 +11,7 @@ export default async function Home() {
         <h2 className='text-lg'>Video on Demand</h2>
       </div>
       <MoviesCarouselTabs />
+      <TvShowsCarouselTabs />
     </div>
   );
 }
