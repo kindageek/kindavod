@@ -22,6 +22,7 @@ export default function MoviesCarousel({
     data: movieDetails,
     isFetching,
     refetch,
+    isFetched,
   } = useQuery({
     queryKey: ['latest-movies-details', JSON.stringify(data)],
     queryFn: async () => {
@@ -44,6 +45,10 @@ export default function MoviesCarousel({
 
   if (!data) return null;
 
+  if (isFetched && !movieDetails.length) {
+    return <p>No movies found</p>;
+  }
+
   return (
     <Carousel
       opts={{
@@ -55,24 +60,24 @@ export default function MoviesCarousel({
       <CarouselContent>
         {isFetching &&
           Array.from({ length: 8 }).map((_, index) => (
-            <CarouselItem key={index} className='basis-1/8'>
+            <CarouselItem key={index} className='basis-1/8 h-36'>
               <Skeleton className='w-24 aspect-[2/3] rounded' />
             </CarouselItem>
           ))}
         {movieDetails.map((movie) =>
           movie ? (
-            <CarouselItem key={movie.id} className='basis-1/8'>
+            <CarouselItem key={movie.id} className='basis-1/8 h-36'>
               <Link
                 key={movie.id}
                 href={`/movies/${movie.id}`}
                 className='flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out'
               >
                 <img
-                  className='w-24 aspect-[2/3] rounded'
+                  className='w-24 h-36 rounded'
                   src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`}
                   alt={movie.title}
                 />
-                <div className='flex flex-col text-center absolute bottom-0 backdrop-blur-[1px] w-full p-0.5 bg-gradient-to-b from-transparent to-slate-900'>
+                <div className='w-24 flex flex-col text-center absolute bottom-0 backdrop-blur-[1px] p-0.5 bg-gradient-to-b from-transparent to-slate-900 rounded-b'>
                   <h2 className='text-xs font-bold'>{movie.title}</h2>
                   <p className='text-xs'>
                     {new Date(movie.release_date).getFullYear()}

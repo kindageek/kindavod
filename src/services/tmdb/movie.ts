@@ -11,15 +11,8 @@ export async function getPopularMovies(params: {
 }): Promise<MovieListResponse | null> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_API_URL}/movie/popular?${DEFAULT_PARAMS}&page=${params.page}`,
-      {
-        ...DEFAULT_REQUEST_OPTIONS,
-      }
+      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tmdb/movie?category=popular&page=${params.page}`
     );
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
     return res.json();
   } catch (error) {
     console.error(error);
@@ -32,15 +25,8 @@ export async function getMovieDetailsById(
 ): Promise<MovieDetails | null> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_TMDB_API_URL}/movie/${movieId}?${DEFAULT_PARAMS}`,
-      {
-        ...DEFAULT_REQUEST_OPTIONS,
-      }
+      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tmdb/movie/${movieId}`
     );
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
     return res.json();
   } catch (error) {
     console.error(error);

@@ -19,14 +19,18 @@ export default async function Home() {
         <h1 className='text-4xl font-bold'>KindaVOD</h1>
         <h2 className='text-lg'>Video on Demand</h2>
       </div>
-      <div className='flex flex-col text-center gap-4'>
-        <h2 className='text-xl font-bold'>Latest</h2>
-        <MoviesCarousel data={latestMovies} />
-      </div>
-      <div className='flex flex-col text-center gap-4'>
-        <h2 className='text-xl font-bold'>Recently Added</h2>
-        <MoviesCarousel data={recentlyAddedMovies} />
-      </div>
+      {latestMovies?.result?.items?.length && (
+        <div className='flex flex-col text-center gap-4'>
+          <h2 className='text-xl font-bold'>Latest</h2>
+          <MoviesCarousel data={latestMovies} />
+        </div>
+      )}
+      {recentlyAddedMovies?.result?.items?.length && (
+        <div className='flex flex-col text-center gap-4'>
+          <h2 className='text-xl font-bold'>Recently Added</h2>
+          <MoviesCarousel data={recentlyAddedMovies} />
+        </div>
+      )}
       <Button asChild variant='link'>
         <Link href='/movies'>All Movies</Link>
       </Button>

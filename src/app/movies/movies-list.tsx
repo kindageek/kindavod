@@ -29,21 +29,21 @@ export default function MoviesList() {
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
         {isFetching &&
           Array.from({ length: 20 }).map((_, index) => (
-            <Skeleton key={index} className='w-48 h-72' />
+            <Skeleton key={index} className='w-full h-72' />
           ))}
         {data &&
           data.results.map((movie) => (
             <Link
               key={movie.id}
               href={`/movies/${movie.id}`}
-              className='flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out w-full'
+              className='min-h-72 flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out w-full'
             >
               <img
                 className='w-full object-cover rounded'
                 src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`}
                 alt={movie.title}
               />
-              <div className='flex flex-col text-center absolute bottom-0 backdrop-blur-[1px] w-full p-0.5 bg-gradient-to-b from-transparent to-slate-900'>
+              <div className='flex flex-col text-center absolute bottom-0 backdrop-blur-[1px] w-full p-0.5 bg-gradient-to-b from-transparent to-slate-900 rounded-b'>
                 <h2 className='text-sm font-bold'>{movie.title}</h2>
                 <p className='text-xs'>
                   {new Date(movie.release_date).getFullYear()}
