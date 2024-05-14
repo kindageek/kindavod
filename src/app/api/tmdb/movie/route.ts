@@ -1,4 +1,6 @@
-const DEFAULT_PARAMS = 'language=en-US';
+const DEFAULT_PARAMS = {
+  language: 'en-US',
+};
 const DEFAULT_REQUEST_OPTIONS = {
   headers: {
     Authorization: `Bearer ${process.env.TMDB_API_READ_ACCESS_TOKEN}`,
@@ -7,11 +9,12 @@ const DEFAULT_REQUEST_OPTIONS = {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const page = searchParams.get('page');
+  const page = searchParams.get('page') || '1';
   const category = searchParams.get('category');
 
+  const urlParams = new URLSearchParams({ ...DEFAULT_PARAMS, page }).toString();
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_API_URL}/movie/${category}?${DEFAULT_PARAMS}&page=${page}`,
+    `${process.env.TMDB_API_URL}/movie/${category}?${urlParams}`,
     {
       ...DEFAULT_REQUEST_OPTIONS,
     }
