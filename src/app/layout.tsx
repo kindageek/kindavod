@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className='dark'>
-      <body className={cx(['container flex flex-col', inter.className])}>
+      <body className={cx(['flex flex-col', inter.className])}>
         <Providers>
           <Navbar />
           {children}
