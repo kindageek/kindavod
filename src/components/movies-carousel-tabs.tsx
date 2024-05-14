@@ -11,8 +11,8 @@ export default async function MoviesCarouselTabs() {
     getRecentlyAddedMovies(),
   ]);
   return (
-    <Tabs defaultValue='latest' className='w-full'>
-      <TabsList>
+    <Tabs defaultValue='latest' className='w-full px-12'>
+      <TabsList className='mb-2'>
         <TabsTrigger value='latest'>Latest</TabsTrigger>
         <TabsTrigger value='recent'>Recently Added</TabsTrigger>
       </TabsList>
