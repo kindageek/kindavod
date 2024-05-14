@@ -1,3 +1,4 @@
+import { getBaseUrlPrefix } from '@/lib/utils';
 import { MovieDetails, MovieListResponse } from '@/types/tmdb/movie';
 const DEFAULT_PARAMS = 'language=en-US';
 const DEFAULT_REQUEST_OPTIONS = {
@@ -11,7 +12,9 @@ export async function getPopularMovies(params: {
 }): Promise<MovieListResponse | null> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tmdb/movie?category=popular&page=${params.page}`
+      `${getBaseUrlPrefix()}/api/tmdb/movie?category=popular&page=${
+        params.page
+      }`
     );
     return res.json();
   } catch (error) {
@@ -24,9 +27,8 @@ export async function getMovieDetailsById(
   movieId: string
 ): Promise<MovieDetails | null> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/tmdb/movie/${movieId}`
-    );
+    console.log(getBaseUrlPrefix());
+    const res = await fetch(`${getBaseUrlPrefix()}/api/tmdb/movie/${movieId}`);
     return res.json();
   } catch (error) {
     console.error(error);

@@ -27,10 +27,13 @@ export default function MoviesCarousel({
     queryKey: ['latest-movies-details', JSON.stringify(data)],
     queryFn: async () => {
       if (!data) return [];
-      const res = await Promise.all(
+      const res = await Promise.allSettled(
         data.result.items.map((movie) => getMovieDetailsById(movie.tmdb_id))
       );
-      return res.filter((movie) => movie !== null);
+      return res
+        .filter((r) => r.status === 'fulfilled')
+        .map((r) => r.value)
+        .filter((movie) => movie !== null);
     },
     enabled: !!data,
     initialData: [],
