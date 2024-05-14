@@ -64,12 +64,18 @@ export default function MoviesCarousel({
       }}
     >
       <CarouselContent>
-        {isFetching &&
+        {(isFetching || true) &&
           Array.from({ length: 10 }).map((_, index) => (
             <CarouselItem key={index} className='basis-1/8'>
-              <div className='w-full h-full flex flex-col items-center gap-2'>
+              <div
+                className={`w-[${POSTER_SIZES.width}px] flex flex-col items-center gap-2`}
+              >
                 <Skeleton
-                  className={`w-[${POSTER_SIZES.width}px] h-[${POSTER_SIZES.height}px] rounded`}
+                  style={{
+                    width: POSTER_SIZES.width,
+                    height: POSTER_SIZES.height,
+                  }}
+                  className='rounded'
                 />
                 <div className='w-full flex flex-col text-center p-0.5 gap-1'>
                   <Skeleton className='w-full h-4' />
@@ -93,8 +99,8 @@ export default function MoviesCarousel({
                   src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`}
                   alt={movie.title}
                 />
-                <div className='w-full flex flex-col text-center p-0.5'>
-                  <h2 className='text-xs font-bold'>{movie.title}</h2>
+                <div className='flex flex-col text-center p-0.5'>
+                  <p className='text-xs font-bold'>{movie.title}</p>
                   <p className='text-xs'>
                     {new Date(movie.release_date).getFullYear()}
                     {', '}
