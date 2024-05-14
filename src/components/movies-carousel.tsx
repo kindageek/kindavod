@@ -64,7 +64,7 @@ export default function MoviesCarousel({
       }}
     >
       <CarouselContent>
-        {(isFetching || true) &&
+        {isFetching &&
           Array.from({ length: 10 }).map((_, index) => (
             <CarouselItem key={index} className='basis-1/8'>
               <div
