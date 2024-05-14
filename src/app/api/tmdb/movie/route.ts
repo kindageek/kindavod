@@ -14,7 +14,7 @@ export async function GET(request: Request) {
 
   const urlParams = new URLSearchParams({ ...DEFAULT_PARAMS, page }).toString();
   const res = await fetch(
-    `${process.env.TMDB_API_URL}/movie/${category}?${urlParams}`,
+    `${process.env.NEXT_PUBLIC_TMDB_API_URL}/movie/${category}?${urlParams}`,
     {
       ...DEFAULT_REQUEST_OPTIONS,
     }
