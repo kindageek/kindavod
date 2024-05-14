@@ -11,10 +11,14 @@ import { Button, buttonVariants } from '../ui/button';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
-const NAV_LINKS = [
+const NAV_LINKS: {
+  href: string;
+  label: string;
+  disabled?: boolean;
+}[] = [
   { href: '/', label: 'Home' },
   { href: '/movies', label: 'Movies' },
-  { href: '/tv', label: 'TV Shows', disabled: true },
+  { href: '/tv', label: 'TV Shows' },
 ];
 
 export default function Navbar() {
