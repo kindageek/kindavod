@@ -2,6 +2,7 @@ import VideoPlayer from './video-player';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import Link from 'next/link';
 import BackButtonLink from '@/components/back-button-link';
+import { notFound } from 'next/navigation';
 
 export default async function MoviePage({
   params: { movieId },
@@ -9,9 +10,11 @@ export default async function MoviePage({
   params: { movieId: string };
 }) {
   const data = await getMovieDetailsById(movieId);
+
   if (!data) {
-    return <div>Failed to fetch data</div>;
+    notFound();
   }
+
   return (
     <main className='flex min-h-screen flex-col items-center justify-center gap-4 p-24'>
       <BackButtonLink />
