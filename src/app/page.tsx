@@ -14,7 +14,7 @@ export default async function Home() {
     getRecentlyAddedMovies(),
   ]);
   return (
-    <main className='flex min-h-screen flex-col items-center p-24 gap-10'>
+    <main className='flex min-h-screen flex-col items-center py-10 gap-10'>
       <div className='flex flex-col text-center gap-1'>
         <h1 className='text-4xl font-bold'>KindaVOD</h1>
         <h2 className='text-lg'>Video on Demand</h2>
@@ -31,9 +31,6 @@ export default async function Home() {
           <MoviesCarousel data={recentlyAddedMovies} />
         </div>
       )}
-      <Button asChild variant='link'>
-        <Link href='/movies'>All Movies</Link>
-      </Button>
     </main>
   );
 }
