@@ -90,7 +90,7 @@ export default function MoviesCarousel({
               <Link
                 key={movie.id}
                 href={`/movies/${movie.id}`}
-                className={`group flex flex-col items-center gap-2 w-[${POSTER_SIZES.width}px]`}
+                className={`group flex flex-col items-center gap-2 w-[${POSTER_SIZES.width}px] max-w-[${POSTER_SIZES.width}px]`}
               >
                 <Image
                   width={POSTER_SIZES.width}
@@ -99,7 +99,7 @@ export default function MoviesCarousel({
                   src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`}
                   alt={movie.title}
                 />
-                <div className='flex flex-col text-center p-0.5'>
+                <div className='w-full flex flex-col text-center p-0.5'>
                   <p className='text-xs font-bold'>{movie.title}</p>
                   <p className='text-xs'>
                     {new Date(movie.release_date).getFullYear()}
