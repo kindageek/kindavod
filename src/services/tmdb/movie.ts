@@ -28,14 +28,17 @@ export async function getMovieDetailsById(
 ): Promise<MovieDetails | null> {
   try {
     if (!movieId) return null;
-
+    console.log(
+      `Fetching movie details for ${movieId}: ${`${getBaseUrlPrefix()}/api/tmdb/movie/${movieId}`}`
+    );
     const res = await fetch(`${getBaseUrlPrefix()}/api/tmdb/movie/${movieId}`);
-
+    console.log(`Response status: ${res.status}`);
     if (!res.ok) {
       throw new Error('Failed to fetch data');
     }
 
     const data = await res.json();
+    console.log(`Data: ${JSON.stringify(data)}`);
     return data;
   } catch (error) {
     console.error(error);
