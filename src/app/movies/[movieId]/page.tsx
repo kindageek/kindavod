@@ -4,6 +4,59 @@ import Link from 'next/link';
 import BackButtonLink from '@/components/back-button-link';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { Metadata, ResolvingMetadata } from 'next';
+
+export async function generateMetadata(
+  { params }: { params: { movieId: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const movieId = params.movieId;
+
+  // fetch data
+  const movie = await getMovieDetailsById(movieId);
+
+  // optionally access and extend (rather than replace) parent metadata
+  const parentMetadata = await parent;
+  const previousImages = parentMetadata.openGraph?.images || [];
+
+  if (!movie) {
+    return {
+      title: 'Movie | KindaVOD',
+      description: 'Video on Demand by @kindadev',
+      twitter: {
+        site: 'KindaVOD',
+        title: 'Movie | KindaVOD',
+        description: 'Video on Demand by @kindadev',
+      },
+      openGraph: {
+        siteName: 'KindaVOD',
+        title: 'Movie | KindaVOD',
+        description: 'Video on Demand by @kindadev',
+        images: previousImages,
+      },
+    };
+  }
+  const title = `${movie.title} | KindaVOD`;
+  const description = `${movie.release_date}, ${movie.genres.at(0)?.name}, ${
+    movie.production_countries?.at(0)?.name
+  }`;
+  const poster = `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`;
+  return {
+    title,
+    description,
+    twitter: {
+      title,
+      description,
+      images: [poster, ...(parentMetadata.twitter?.images || [])],
+    },
+    openGraph: {
+      title,
+      description,
+      images: [poster, ...(parentMetadata.openGraph?.images || [])],
+    },
+  };
+}
 
 export default async function MoviePage({
   params: { movieId },

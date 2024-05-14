@@ -11,6 +11,14 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'KindaVOD',
   description: 'Video on Demand by @kindadev',
+  twitter: {
+    title: 'KindaVOD',
+    description: 'Video on Demand by @kindadev',
+  },
+  openGraph: {
+    title: 'KindaVOD',
+    description: 'Video on Demand by @kindadev',
+  },
 };
 
 export default function RootLayout({
