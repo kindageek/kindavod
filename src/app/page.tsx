@@ -4,12 +4,12 @@ export const revalidate = 0;
 
 export default async function Home() {
   return (
-    <main className='container flex flex-col items-center p-10 gap-8'>
+    <div className='container flex flex-col items-center p-10 gap-8'>
       <div className='flex flex-col text-center gap-1'>
         <h1 className='text-4xl font-bold'>KindaVOD</h1>
         <h2 className='text-lg'>Video on Demand</h2>
       </div>
       <MoviesCarouselTabs />
-    </main>
+    </div>
   );
 }

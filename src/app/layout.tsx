@@ -4,6 +4,7 @@ import './globals.css';
 import Providers from './providers';
 import Navbar from '@/components/layout/navbar';
 import { cx } from 'class-variance-authority';
+import Footer from '@/components/layout/footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,10 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className='dark'>
-      <body className={cx(['flex flex-col', inter.className])}>
+      <body
+        className={cx(['flex flex-col h-full min-h-screen', inter.className])}
+      >
         <Providers>
           <Navbar />
-          {children}
+          <main className='flex-[1_1_100%] flex flex-col'>{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>

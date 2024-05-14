@@ -17,7 +17,7 @@ export default async function MoviePage({
   }
 
   return (
-    <main className='container flex flex-col items-start p-5 gap-8'>
+    <div className='container flex flex-col items-start p-5 gap-8'>
       <BackButtonLink />
       <img
         className='w-screen h-screen object-cover fixed top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
@@ -59,6 +59,6 @@ export default async function MoviePage({
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
