@@ -13,6 +13,9 @@ import { getMovieDetailsById } from '@/services/tmdb/movie';
 import { useEffect } from 'react';
 import { Skeleton } from './ui/skeleton';
 import { MovieDetails } from '@/types/tmdb/movie';
+import Image from 'next/image';
+
+const POSTER_SIZES = { width: 144, height: 216 };
 
 export default function MoviesCarousel({
   data,
@@ -47,7 +50,7 @@ export default function MoviesCarousel({
     }
   }, [data, refetch]);
 
-  if (!data) return null;
+  if (!data && isFetched) return null;
 
   if (isFetched && !movieDetails.length) {
     return <p>No movies found</p>;
@@ -59,32 +62,45 @@ export default function MoviesCarousel({
         align: 'start',
         loop: true,
       }}
-      className='w-full max-w-5xl'
     >
       <CarouselContent>
         {isFetching &&
-          Array.from({ length: 8 }).map((_, index) => (
-            <CarouselItem key={index} className='basis-1/8 h-36'>
-              <Skeleton className='w-24 aspect-[2/3] rounded' />
+          Array.from({ length: 10 }).map((_, index) => (
+            <CarouselItem key={index} className='basis-1/8'>
+              <div className='w-full h-full flex flex-col items-center gap-2'>
+                <Skeleton
+                  className={`w-[${POSTER_SIZES.width}px] h-[${POSTER_SIZES.height}px] rounded`}
+                />
+                <div className='w-full flex flex-col text-center p-0.5 gap-1'>
+                  <Skeleton className='w-full h-4' />
+                  <Skeleton className='w-full h-4' />
+                </div>
+              </div>
             </CarouselItem>
           ))}
         {movieDetails.map((movie) =>
           movie ? (
-            <CarouselItem key={movie.id} className='basis-1/8 h-36'>
+            <CarouselItem key={movie.id} className='basis-1/8'>
               <Link
                 key={movie.id}
                 href={`/movies/${movie.id}`}
-                className='flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out'
+                className={`group flex flex-col items-center gap-2 w-[${POSTER_SIZES.width}px]`}
               >
-                <img
-                  className='w-24 h-36 rounded'
+                <Image
+                  width={POSTER_SIZES.width}
+                  height={POSTER_SIZES.height}
+                  className='rounded group-hover:opacity-75 group-hover:scale-[1.025] transition-all duration-300 ease-in-out'
                   src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`}
                   alt={movie.title}
                 />
-                <div className='w-24 flex flex-col text-center absolute bottom-0 backdrop-blur-[1px] p-0.5 bg-gradient-to-b from-transparent to-slate-900 rounded-b'>
+                <div className='w-full flex flex-col text-center p-0.5'>
                   <h2 className='text-xs font-bold'>{movie.title}</h2>
                   <p className='text-xs'>
                     {new Date(movie.release_date).getFullYear()}
+                    {', '}
+                    {movie.production_countries[0]?.name}
+                    {', '}
+                    {movie.genres[0]?.name}
                   </p>
                 </div>
               </Link>
