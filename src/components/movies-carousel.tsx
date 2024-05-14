@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import { useEffect } from 'react';
 import { Skeleton } from './ui/skeleton';
+import { MovieDetails } from '@/types/tmdb/movie';
 
 export default function MoviesCarousel({
   data,
@@ -30,10 +31,10 @@ export default function MoviesCarousel({
       const res = await Promise.allSettled(
         data.result.items.map((movie) => getMovieDetailsById(movie.tmdb_id))
       );
-      return res
-        .filter((r) => r.status === 'fulfilled')
-        .map((r) => r.value)
-        .filter((movie) => movie !== null);
+      const fulfilled = res.filter(
+        (r) => r.status === 'fulfilled'
+      ) as PromiseFulfilledResult<MovieDetails | null>[];
+      return fulfilled.map((r) => r.value).filter((movie) => movie !== null);
     },
     enabled: !!data,
     initialData: [],
