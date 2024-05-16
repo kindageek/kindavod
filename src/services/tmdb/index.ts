@@ -1,0 +1,30 @@
+import { getBaseUrlPrefix } from '@/lib/utils';
+import { SearchResult } from '@/types/tmdb/search';
+
+export async function getSearchResult(params: {
+  query: string;
+  page: number;
+}): Promise<SearchResult | null> {
+  if (!params.query || !params.page) return null;
+  try {
+    const urlParams = new URLSearchParams({
+      ...params,
+      page: params.page.toString(),
+      type: 'multi',
+    }).toString();
+    console.log({ urlParams });
+    const res = await fetch(
+      `${getBaseUrlPrefix()}/api/tmdb/search?${urlParams}`
+    );
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

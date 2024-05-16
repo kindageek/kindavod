@@ -4,12 +4,16 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import Link from 'next/link';
-import { Button, buttonVariants } from '../ui/button';
+import { buttonVariants } from '../ui/button';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import dynamic from 'next/dynamic';
+
+const SearchInput = dynamic(() => import('../search/search-input'), {
+  ssr: false,
+});
 
 const NAV_LINKS: {
   href: string;
@@ -61,6 +65,7 @@ export default function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
+        <SearchInput />
       </div>
     </div>
   );
