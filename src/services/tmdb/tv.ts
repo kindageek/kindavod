@@ -42,3 +42,23 @@ export async function getTvShowDetailsById(
     return null;
   }
 }
+
+export async function getTrendingTvShows(params: {
+  page: number;
+}): Promise<TvShowListResponse | null> {
+  try {
+    const res = await fetch(
+      `${getBaseUrlPrefix()}/api/tmdb/tv/trending?page=${params.page}`
+    );
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
