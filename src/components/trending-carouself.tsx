@@ -18,7 +18,7 @@ export default function TrendingCarousel() {
         title: movie.title,
         date: new Date(movie.release_date).getFullYear().toString(),
         imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`,
-        url: `/movie/${movie.id}`,
+        url: `/movies/${movie.id}`,
       })) as CarouselCardInfo[];
     },
   });

@@ -27,7 +27,6 @@ export default function CarouselCards({
   data: CarouselCardInfo[];
   loading: boolean;
 }) {
-  console.log({ data, loading });
   return (
     <Carousel
       opts={{
