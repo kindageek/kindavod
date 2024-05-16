@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import TvShowsList from './tv-shows-list';
+import TvShowsList from '../../components/tv/tv-shows-list';
 
 export const revalidate = 0;
 

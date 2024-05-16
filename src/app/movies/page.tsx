@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import MoviesList from './movies-list';
+import MoviesList from '../../components/movie/movies-list';
 
 export const revalidate = 0;
 

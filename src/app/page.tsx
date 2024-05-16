@@ -1,4 +1,4 @@
-import MoviesCarouselTabs from '@/components/movies-carousel-tabs';
+import MoviesCarouselTabs from '@/components/movie/movies-carousel-tabs';
 import TvShowsCarouselTabs from '@/components/tv/tv-carousel-tabs';
 
 export const revalidate = 0;

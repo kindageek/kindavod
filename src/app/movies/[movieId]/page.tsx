@@ -41,19 +41,25 @@ export async function generateMetadata(
   const description = `${movie.release_date}, ${movie.genres.at(0)?.name}, ${
     movie.production_countries?.at(0)?.name
   }`;
-  const poster = `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`;
+  const poster = movie.poster_path
+    ? `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`
+    : null;
   return {
     title,
     description,
     twitter: {
       title,
       description,
-      images: [poster, ...(parentMetadata.twitter?.images || [])],
+      images: poster
+        ? [poster, ...(parentMetadata.twitter?.images || [])]
+        : parentMetadata.twitter?.images || [],
     },
     openGraph: {
       title,
       description,
-      images: [poster, ...(parentMetadata.openGraph?.images || [])],
+      images: poster
+        ? [poster, ...(parentMetadata.openGraph?.images || [])]
+        : parentMetadata.openGraph?.images || [],
     },
   };
 }
@@ -64,7 +70,6 @@ export default async function MoviePage({
   params: { movieId: string };
 }) {
   const data = await getMovieDetailsById(movieId);
-
   if (!data) {
     notFound();
   }
@@ -72,24 +77,28 @@ export default async function MoviePage({
   return (
     <div className='container flex flex-col items-start p-5 gap-8'>
       <BackButtonLink />
-      <img
-        className='w-screen h-screen object-cover fixed top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
-        src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${data.backdrop_path}`}
-        alt={data.title}
-      />
+      {data.backdrop_path && (
+        <img
+          className='w-screen h-screen object-cover fixed top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
+          src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${data.backdrop_path}`}
+          alt={data.title}
+        />
+      )}
       <div className='flex flex-col items-center w-full'>
         <div className='flex flex-col items-center w-full max-w-screen-lg'>
           <div className='flex flex-col gap-10'>
             <div className='flex items-start justify-center gap-4'>
-              <div className='relative min-w-40 md:min-w-64 aspect-[2/3]'>
-                <Image
-                  fill
-                  objectFit='cover'
-                  className='rounded-lg shadow'
-                  src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${data.poster_path}`}
-                  alt={data.title}
-                />
-              </div>
+              {data.poster_path && (
+                <div className='relative min-w-40 md:min-w-64 aspect-[2/3]'>
+                  <Image
+                    fill
+                    objectFit='cover'
+                    className='rounded-lg shadow'
+                    src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${data.poster_path}`}
+                    alt={data.title}
+                  />
+                </div>
+              )}
               <div className='flex flex-col gap-4'>
                 <Link
                   href={data.homepage || ''}

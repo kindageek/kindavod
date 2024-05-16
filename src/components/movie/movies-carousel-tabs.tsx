@@ -2,8 +2,8 @@ import {
   getLatestMovies,
   getRecentlyAddedMovies,
 } from '@/services/vidsrc/movie';
-import MoviesCarousel from '@/components/movies-carousel';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import MoviesCarousel from './movies-carousel';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 
 export default async function MoviesCarouselTabs() {
   const [latestMovies, recentlyAddedMovies] = await Promise.all([
