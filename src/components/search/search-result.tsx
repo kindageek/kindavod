@@ -5,11 +5,6 @@ import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import VodPagination from '../vod-pagination';
 import { Skeleton } from '../ui/skeleton';
-import Link from 'next/link';
-import Image from 'next/image';
-import { SearchResultItem } from '@/types/tmdb/search';
-import { Clapperboard, UserRound } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import SearchResultCard from './search-result-card';
 
 export default function SearchResult() {

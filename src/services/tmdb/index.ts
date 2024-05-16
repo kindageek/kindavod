@@ -12,7 +12,7 @@ export async function getSearchResult(params: {
       page: params.page.toString(),
       type: 'multi',
     }).toString();
-    console.log({ urlParams });
+
     const res = await fetch(
       `${getBaseUrlPrefix()}/api/tmdb/search?${urlParams}`
     );

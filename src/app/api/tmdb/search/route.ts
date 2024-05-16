@@ -20,17 +20,13 @@ export async function GET(request: Request) {
     page,
     query,
   }).toString();
-  console.log(
-    'api',
-    `${process.env.NEXT_PUBLIC_TMDB_API_URL}/search/${type}?${urlParams}`
-  );
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_API_URL}/search/${type}?${urlParams}`,
     {
       ...DEFAULT_REQUEST_OPTIONS,
     }
   );
-  console.log(`res ${res.status}`, DEFAULT_REQUEST_OPTIONS, res.url);
   if (!res.ok) {
     throw new Error('Failed to fetch data');
   }
