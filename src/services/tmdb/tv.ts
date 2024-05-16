@@ -3,10 +3,11 @@ import { TvShowDetails, TvShowListResponse } from '@/types/tmdb/tv';
 
 export async function getTvShows(params: {
   page: number;
+  category: string;
 }): Promise<TvShowListResponse | null> {
   try {
     const res = await fetch(
-      `${getBaseUrlPrefix()}/api/tmdb/tv?category=airing_today&page=${
+      `${getBaseUrlPrefix()}/api/tmdb/tv?category=${params.category}&page=${
         params.page
       }`
     );

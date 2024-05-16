@@ -1,24 +1,67 @@
 'use client';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getTvShows } from '@/services/tmdb/tv';
 import VodPagination from '@/components/vod-pagination';
 import TvShowListCard from './tv-show-list-card';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+const TABS = [
+  {
+    id: 'popular',
+    name: 'Popular',
+  },
+  {
+    id: 'top_rated',
+    name: 'Top Rated',
+  },
+  {
+    id: 'on_the_air',
+    name: 'On The Air',
+  },
+  {
+    id: 'airing_today',
+    name: 'Airing Today',
+  },
+];
 
 export default function TvShowsList() {
+  const { replace } = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const page = parseInt(searchParams.get('page') || '1');
+  const tab = searchParams.get('tab') || 'popular';
 
   const { data, isFetching } = useQuery({
-    queryKey: ['tvShows', page],
-    queryFn: () => getTvShows({ page }),
+    queryKey: ['tvShows', page, tab],
+    queryFn: () => getTvShows({ page, category: tab }),
     placeholderData: keepPreviousData,
   });
 
+  function onTabChange(tabId: string) {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', '1');
+    params.set('tab', tabId);
+    replace(`${pathname}?${params.toString()}`);
+  }
+
   return (
     <div className='flex flex-col items-center justify-between h-full w-full gap-8'>
-      <VodPagination baseUrl='/tv' currentPage={page} />
+      <Tabs value={tab} onValueChange={onTabChange}>
+        <TabsList>
+          {TABS.map((tab) => (
+            <TabsTrigger key={tab.id} value={tab.id}>
+              {tab.name}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+      <VodPagination
+        baseUrl={`/tv?tab=${tab}`}
+        paramPrefix='&'
+        currentPage={page}
+      />
       <div className='flex flex-wrap justify-center gap-4'>
         {isFetching &&
           Array.from({ length: 20 }).map((_, index) => (
@@ -32,7 +75,11 @@ export default function TvShowsList() {
             <TvShowListCard key={item.id} item={item} />
           ))}
       </div>
-      <VodPagination baseUrl='/tv' currentPage={page} />
+      <VodPagination
+        baseUrl={`/tv?tab=${tab}`}
+        paramPrefix='&'
+        currentPage={page}
+      />
     </div>
   );
 }
