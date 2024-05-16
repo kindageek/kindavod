@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { Skeleton } from '../ui/skeleton';
 import { MovieDetails } from '@/types/tmdb/movie';
 import Image from 'next/image';
+import CarouselCards, { CarouselCardInfo } from '../carousel-cards';
 
 const POSTER_SIZES = { width: 144, height: 216 };
 
@@ -42,6 +43,15 @@ export default function MoviesCarousel({
     enabled: !!data,
     initialData: [],
     placeholderData: [],
+    select: (data) => {
+      return data.map((movie) => ({
+        id: movie.id,
+        title: movie.title,
+        date: new Date(movie.release_date).getFullYear().toString(),
+        imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`,
+        url: `/movies/${movie.id}`,
+      })) as CarouselCardInfo[];
+    },
   });
 
   useEffect(() => {
@@ -57,77 +67,9 @@ export default function MoviesCarousel({
   }
 
   return (
-    <Carousel
-      opts={{
-        align: 'start',
-        loop: true,
-      }}
-    >
-      <CarouselContent>
-        {isFetching &&
-          Array.from({ length: 10 }).map((_, index) => (
-            <CarouselItem key={index} className='basis-1/8'>
-              <div
-                className='flex flex-col items-center gap-2'
-                style={{
-                  width: POSTER_SIZES.width,
-                }}
-              >
-                <Skeleton
-                  style={{
-                    width: POSTER_SIZES.width,
-                    height: POSTER_SIZES.height,
-                  }}
-                  className='rounded'
-                />
-                <div className='w-full flex flex-col text-center p-0.5 gap-1'>
-                  <Skeleton className='w-full h-4' />
-                  <Skeleton className='w-full h-4' />
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        {movieDetails.map((movie) =>
-          movie ? (
-            <CarouselItem key={movie.id} className='basis-1/8'>
-              <Link
-                key={movie.id}
-                href={`/movies/${movie.id}`}
-                className='group flex flex-col items-center gap-2'
-                style={{
-                  width: POSTER_SIZES.width,
-                  maxWidth: POSTER_SIZES.width,
-                }}
-              >
-                <Image
-                  width={POSTER_SIZES.width}
-                  height={POSTER_SIZES.height}
-                  className='rounded group-hover:opacity-75 group-hover:scale-[1.025] transition-all duration-300 ease-in-out'
-                  src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`}
-                  alt={movie.title}
-                />
-                <div
-                  className='flex flex-col text-center p-0.5'
-                  style={{
-                    width: POSTER_SIZES.width,
-                  }}
-                >
-                  <p className='text-xs font-bold'>{movie.title}</p>
-                  <p className='text-xs'>
-                    {new Date(movie.release_date).getFullYear()}
-                    {', '}
-                    {movie.production_countries[0]?.name}
-                    {', '}
-                    {movie.genres[0]?.name}
-                  </p>
-                </div>
-              </Link>
-            </CarouselItem>
-          ) : null
-        )}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <CarouselCards
+      data={movieDetails as CarouselCardInfo[]}
+      loading={isFetching}
+    />
   );
 }
