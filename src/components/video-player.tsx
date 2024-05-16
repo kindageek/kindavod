@@ -17,7 +17,7 @@ export default function VideoPlayer({
         src={`${process.env.NEXT_PUBLIC_VIDSRC_URL}/embed/${type}/${id}`}
         className='w-full aspect-video object-cover rounded'
       />
-      <div className='flex items-center gap-1 text-center text-sm text-gray-500 hover:text-white'>
+      <div className='flex items-center justify-center gap-1 text-center text-sm text-gray-500 hover:text-white w-full'>
         <Info size={14} />
         Tip: use{' '}
         <Link

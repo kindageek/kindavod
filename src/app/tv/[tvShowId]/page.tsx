@@ -102,15 +102,34 @@ export default async function MoviePage({
                     {data.name}
                   </h1>
                 </Link>
+                {data.tagline && (
+                  <p className='text-sm md:text-base italic'>{data.tagline}</p>
+                )}
+                {data.vote_average && (
+                  <p className='text-sm md:text-base'>
+                    <b>Rating:</b> {data.vote_average}/10 ({data.vote_count}{' '}
+                    votes)
+                  </p>
+                )}
                 <p className='text-sm md:text-base'>
-                  {`${new Date(data.first_air_date).getFullYear()} - ${new Date(
-                    data.last_air_date
-                  ).getFullYear()}`}
-                  , {data.genres.map((g) => g.name).join(', ')}
+                  <b>Release:</b> {new Date(data.first_air_date).toDateString()}
+                </p>
+                {data.last_air_date && (
+                  <p className='text-sm md:text-base'>
+                    <b>Last episode:</b>{' '}
+                    {new Date(data.last_air_date).toDateString()}
+                  </p>
+                )}
+                <p className='text-sm md:text-base'>
+                  <b>Genres:</b> {data.genres.map((c) => c.name).join(', ')}
                 </p>
                 <p className='text-sm md:text-base'>
-                  {data.number_of_seasons} season
-                  {data.number_of_seasons > 1 && 's'}
+                  <b>Counries:</b>{' '}
+                  {data.production_countries.map((c) => c.name).join(', ')}
+                </p>
+                <p className='text-sm md:text-base'>
+                  <b>Seasons:</b> {data.number_of_seasons} (
+                  {data.number_of_episodes} episodes)
                 </p>
                 <p className='text-sm md:text-base'>{data.overview}</p>
               </div>

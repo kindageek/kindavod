@@ -109,11 +109,28 @@ export default async function MoviePage({
                     {data.title}
                   </h1>
                 </Link>
+                {data.tagline && (
+                  <p className='text-sm md:text-base italic'>{data.tagline}</p>
+                )}
+                {data.vote_average && (
+                  <p className='text-sm md:text-base'>
+                    <b>Rating:</b> {data.vote_average}/10 ({data.vote_count}{' '}
+                    votes)
+                  </p>
+                )}
                 <p className='text-sm md:text-base'>
-                  {new Date(data.release_date).getFullYear()},{' '}
-                  {data.genres.map((g) => g.name).join(', ')}
+                  <b>Release:</b> {new Date(data.release_date).toDateString()}
                 </p>
-                <p className='text-sm md:text-base'>{data.runtime} minutes</p>
+                <p className='text-sm md:text-base'>
+                  <b>Genres:</b> {data.genres.map((c) => c.name).join(', ')}
+                </p>
+                <p className='text-sm md:text-base'>
+                  <b>Counries:</b>{' '}
+                  {data.production_countries.map((c) => c.name).join(', ')}
+                </p>
+                <p className='text-sm md:text-base'>
+                  <b>Runtime:</b> {data.runtime} minutes
+                </p>
                 <p className='text-sm md:text-base'>{data.overview}</p>
               </div>
             </div>
