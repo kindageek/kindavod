@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { Clapperboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MovieShortInfo } from '@/types/tmdb/movie';
+import useCardIndicator from '@/hooks/useCardIndicator';
+import CardPlayerIndicator from '../card-player-indicator';
 
 export default function MovieListCard({ item }: { item: MovieShortInfo }) {
   const data = useMemo(() => {
@@ -19,8 +21,16 @@ export default function MovieListCard({ item }: { item: MovieShortInfo }) {
     };
   }, [item]);
 
+  const { indicatorStatus, handleCardHover, isHovering, handleCardUnhover } =
+    useCardIndicator({
+      id: item.id,
+      type: 'movie',
+    });
+
   return (
     <Link
+      onMouseOver={handleCardHover}
+      onMouseLeave={handleCardUnhover}
       key={data.id}
       href={data.url}
       className={cn(
@@ -46,6 +56,12 @@ export default function MovieListCard({ item }: { item: MovieShortInfo }) {
         <h2 className='text-xs sm:text-sm font-bold'>{data.title}</h2>
         <p className='text-xs'>{data.description}</p>
       </div>
+      <CardPlayerIndicator
+        type='movie'
+        size={24}
+        status={indicatorStatus}
+        className={cn('absolute top-1 right-1', { hidden: !isHovering })}
+      />
     </Link>
   );
 }

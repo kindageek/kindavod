@@ -19,6 +19,7 @@ export default function TrendingCarousel() {
         date: new Date(movie.release_date).getFullYear().toString(),
         imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`,
         url: `/movies/${movie.id}`,
+        type: 'movie',
       })) as CarouselCardInfo[];
     },
   });
@@ -36,6 +37,7 @@ export default function TrendingCarousel() {
         date: `${new Date(tvShow.first_air_date).getFullYear().toString()}`,
         imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${tvShow.poster_path}`,
         url: `/tv/${tvShow.id}`,
+        type: 'tv',
       })) as CarouselCardInfo[];
     },
   });

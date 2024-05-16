@@ -50,6 +50,7 @@ export default function MoviesCarousel({
         date: new Date(movie.release_date).getFullYear().toString(),
         imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`,
         url: `/movies/${movie.id}`,
+        type: 'movie',
       })) as CarouselCardInfo[];
     },
   });

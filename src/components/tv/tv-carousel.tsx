@@ -52,6 +52,7 @@ export default function TvShowsCarousel({
         date: `${new Date(tvShow.first_air_date).getFullYear().toString()}`,
         imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${tvShow.poster_path}`,
         url: `/tv/${tvShow.id}`,
+        type: 'tv',
       })) as CarouselCardInfo[];
     },
   });
