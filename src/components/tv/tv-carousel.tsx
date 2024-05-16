@@ -46,14 +46,22 @@ export default function TvShowsCarousel({
     initialData: [],
     placeholderData: [],
     select: (data) => {
-      return data.map((tvShow) => ({
-        id: tvShow.id,
-        title: tvShow.name,
-        date: `${new Date(tvShow.first_air_date).getFullYear().toString()}`,
-        imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${tvShow.poster_path}`,
-        url: `/tv/${tvShow.id}`,
-        type: 'tv',
-      })) as CarouselCardInfo[];
+      return data
+        .map((tvShow) =>
+          tvShow
+            ? {
+                id: tvShow.id,
+                title: tvShow.name,
+                date: `${new Date(tvShow.first_air_date)
+                  .getFullYear()
+                  .toString()}`,
+                imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${tvShow.poster_path}`,
+                url: `/tv/${tvShow.id}`,
+                type: 'tv',
+              }
+            : null
+        )
+        .filter((x) => !!x) as CarouselCardInfo[];
     },
   });
 

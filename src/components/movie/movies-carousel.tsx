@@ -1,22 +1,10 @@
 'use client';
-import Link from 'next/link';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 import { LatestItemsListResponse } from '@/types/vidsrc';
 import { useQuery } from '@tanstack/react-query';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import { useEffect } from 'react';
-import { Skeleton } from '../ui/skeleton';
 import { MovieDetails } from '@/types/tmdb/movie';
-import Image from 'next/image';
 import CarouselCards, { CarouselCardInfo } from '../carousel-cards';
-
-const POSTER_SIZES = { width: 144, height: 216 };
 
 export default function MoviesCarousel({
   data,
@@ -44,14 +32,20 @@ export default function MoviesCarousel({
     initialData: [],
     placeholderData: [],
     select: (data) => {
-      return data.map((movie) => ({
-        id: movie.id,
-        title: movie.title,
-        date: new Date(movie.release_date).getFullYear().toString(),
-        imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`,
-        url: `/movies/${movie.id}`,
-        type: 'movie',
-      })) as CarouselCardInfo[];
+      return data
+        .map((movie) =>
+          movie
+            ? {
+                id: movie.id,
+                title: movie.title,
+                date: new Date(movie.release_date).getFullYear().toString(),
+                imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`,
+                url: `/movies/${movie.id}`,
+                type: 'movie',
+              }
+            : null
+        )
+        .filter((x) => !!x) as CarouselCardInfo[];
     },
   });
 
