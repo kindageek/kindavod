@@ -44,12 +44,14 @@ export default function TrendingCarousel() {
 
   return (
     <div className='flex flex-col gap-4 w-full px-12'>
-      <h2 className='text-xl font-bold'>Trending</h2>
       <Tabs defaultValue='movies'>
-        <TabsList className='mb-2'>
-          <TabsTrigger value='movies'>Movies</TabsTrigger>
-          <TabsTrigger value='tvShows'>TV Shows</TabsTrigger>
-        </TabsList>
+        <div className='flex justify-between items-center gap-4'>
+          <h2 className='text-xl font-bold'>Trending</h2>
+          <TabsList className='mb-2'>
+            <TabsTrigger value='movies'>Movies</TabsTrigger>
+            <TabsTrigger value='tvShows'>TV Shows</TabsTrigger>
+          </TabsList>
+        </div>
         <TabsContent value='movies'>
           <CarouselCards
             data={movies as CarouselCardInfo[]}

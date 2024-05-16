@@ -12,12 +12,14 @@ export default async function TvShowsCarouselTabs() {
   ]);
   return (
     <div className='flex flex-col gap-4 w-full px-12'>
-      <h2 className='text-xl font-bold'>TV Shows</h2>
       <Tabs defaultValue='latest'>
-        <TabsList className='mb-2'>
-          <TabsTrigger value='latest'>Latest</TabsTrigger>
-          <TabsTrigger value='recent'>Recently Added</TabsTrigger>
-        </TabsList>
+        <div className='flex justify-between items-center gap-4'>
+          <h2 className='text-xl font-bold'>TV Shows</h2>
+          <TabsList className='mb-2'>
+            <TabsTrigger value='latest'>Latest</TabsTrigger>
+            <TabsTrigger value='recent'>Recently Added</TabsTrigger>
+          </TabsList>
+        </div>
         <TabsContent value='latest'>
           <TvShowsCarousel data={latestMovies} />
         </TabsContent>
