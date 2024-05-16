@@ -1,12 +1,13 @@
 import { getBaseUrlPrefix } from '@/lib/utils';
 import { MovieDetails, MovieListResponse } from '@/types/tmdb/movie';
 
-export async function getPopularMovies(params: {
+export async function getMovies(params: {
   page: number;
+  category: string;
 }): Promise<MovieListResponse | null> {
   try {
     const res = await fetch(
-      `${getBaseUrlPrefix()}/api/tmdb/movie?category=popular&page=${
+      `${getBaseUrlPrefix()}/api/tmdb/movie?category=${params.category}&page=${
         params.page
       }`
     );

@@ -1,26 +1,67 @@
 'use client';
-import { getPopularMovies } from '@/services/tmdb/movie';
+import { getMovies } from '@/services/tmdb/movie';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
-import Image from 'next/image';
 import VodPagination from '@/components/vod-pagination';
 import MovieListCard from './movie-list-card';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+const TABS = [
+  {
+    id: 'popular',
+    name: 'Popular',
+  },
+  {
+    id: 'top_rated',
+    name: 'Top Rated',
+  },
+  {
+    id: 'now_playing',
+    name: 'Now Playing',
+  },
+  {
+    id: 'upcoming',
+    name: 'Upcoming',
+  },
+];
 
 export default function MoviesList() {
+  const { replace } = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const page = parseInt(searchParams.get('page') || '1');
+  const tab = searchParams.get('tab') || 'popular';
 
   const { data, isFetching } = useQuery({
-    queryKey: ['popularMovies', page],
-    queryFn: () => getPopularMovies({ page }),
+    queryKey: ['popularMovies', page, tab],
+    queryFn: () => getMovies({ page, category: tab }),
     placeholderData: keepPreviousData,
   });
 
+  function onTabChange(tabId: string) {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', '1');
+    params.set('tab', tabId);
+    replace(`${pathname}?${params.toString()}`);
+  }
+
   return (
     <div className='flex flex-col items-center justify-between h-full w-full gap-8'>
-      <VodPagination baseUrl='/movies' currentPage={page} />
+      <Tabs value={tab} onValueChange={onTabChange}>
+        <TabsList>
+          {TABS.map((tab) => (
+            <TabsTrigger key={tab.id} value={tab.id}>
+              {tab.name}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+      <VodPagination
+        baseUrl={`/movies?tab=${tab}`}
+        paramPrefix='&'
+        currentPage={page}
+      />
       <div className='flex flex-wrap justify-center gap-4'>
         {isFetching &&
           Array.from({ length: 20 }).map((_, index) => (
@@ -34,7 +75,11 @@ export default function MoviesList() {
             <MovieListCard key={movie.id} item={movie} />
           ))}
       </div>
-      <VodPagination baseUrl='/movies' currentPage={page} />
+      <VodPagination
+        baseUrl={`/movies?tab=${tab}`}
+        paramPrefix='&'
+        currentPage={page}
+      />
     </div>
   );
 }
