@@ -1,4 +1,4 @@
-import VideoPlayer from './video-player';
+import VideoPlayer from '@/components/video-player';
 import Link from 'next/link';
 import BackButtonLink from '@/components/back-button-link';
 import { notFound } from 'next/navigation';
@@ -115,7 +115,7 @@ export default async function MoviePage({
                 <p className='text-sm md:text-base'>{data.overview}</p>
               </div>
             </div>
-            <VideoPlayer id={tvShowId} />
+            <VideoPlayer type='tv' id={tvShowId} />
           </div>
         </div>
       </div>

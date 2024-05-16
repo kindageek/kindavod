@@ -1,4 +1,4 @@
-import VideoPlayer from './video-player';
+import VideoPlayer from '@/components/video-player';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import Link from 'next/link';
 import BackButtonLink from '@/components/back-button-link';
@@ -117,7 +117,7 @@ export default async function MoviePage({
                 <p className='text-sm md:text-base'>{data.overview}</p>
               </div>
             </div>
-            <VideoPlayer movieId={movieId} />
+            <VideoPlayer type='movie' id={movieId} />
           </div>
         </div>
       </div>
