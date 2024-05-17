@@ -1,5 +1,7 @@
+import { DEFAULT_LANGUAGE } from '@/lib/constants';
+
 const DEFAULT_PARAMS = {
-  language: 'en-US',
+  language: DEFAULT_LANGUAGE,
 };
 const DEFAULT_REQUEST_OPTIONS = {
   headers: {
