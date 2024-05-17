@@ -69,7 +69,7 @@ export default function SearchResultCard({ item }: { item: SearchResultItem }) {
         }
       )}
     >
-      <div className='w-32 sm:w-40 md:w-48 lg:w-60 aspect-[2/3]'>
+      <div className='w-36 sm:w-40 md:w-48 lg:w-60 aspect-[2/3]'>
         {data.imgUrl ? (
           <Image
             fill

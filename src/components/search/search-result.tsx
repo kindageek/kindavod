@@ -35,7 +35,7 @@ export default function SearchResult() {
           Array.from({ length: 20 }).map((_, index) => (
             <Skeleton
               key={index}
-              className='w-32 sm:w-40 md:w-48 lg:w-60 aspect-[2/3]'
+              className='w-36 sm:w-40 md:w-48 lg:w-60 aspect-[2/3]'
             />
           ))}
         {list?.map((item) => (

@@ -37,7 +37,7 @@ export default function MovieListCard({ item }: { item: MovieShortInfo }) {
         'flex flex-col items-center gap-2 relative hover:opacity-75 hover:scale-[1.025] transition-all duration-300 ease-in-out'
       )}
     >
-      <div className='w-32 sm:w-40 md:w-48 lg:w-60 aspect-[2/3]'>
+      <div className='w-36 sm:w-40 md:w-48 lg:w-60 aspect-[2/3]'>
         {data.imgUrl ? (
           <Image
             fill
