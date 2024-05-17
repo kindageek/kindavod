@@ -25,12 +25,16 @@ export default function SearchResult() {
 
   return (
     <div className='flex flex-col items-center justify-between h-full w-full gap-4 sm:gap-8'>
+      <h1 className='text-lg md:text-2xl font-bold'>
+        {`Search results for "${query}"`}
+      </h1>
       <VodPagination
         baseUrl={`/search?q=${query}`}
         paramPrefix='&'
         currentPage={page}
+        totalPages={data?.total_pages}
       />
-      <div className='flex flex-wrap justify-center gap-4'>
+      <div className='flex flex-wrap w-full gap-4'>
         {isFetching &&
           Array.from({ length: 20 }).map((_, index) => (
             <Skeleton
@@ -46,6 +50,7 @@ export default function SearchResult() {
         baseUrl={`/search?q=${query}`}
         paramPrefix='&'
         currentPage={page}
+        totalPages={data?.total_pages}
       />
     </div>
   );

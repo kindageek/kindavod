@@ -53,6 +53,7 @@ export default function MoviesList() {
         baseUrl={`/movies?tab=${tab}`}
         paramPrefix='&'
         currentPage={page}
+        totalPages={data?.total_pages}
       />
       <div className='flex flex-wrap justify-center gap-4'>
         {isFetching &&
@@ -71,6 +72,7 @@ export default function MoviesList() {
         baseUrl={`/movies?tab=${tab}`}
         paramPrefix='&'
         currentPage={page}
+        totalPages={data?.total_pages}
       />
     </div>
   );
