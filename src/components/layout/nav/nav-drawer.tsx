@@ -28,13 +28,19 @@ export default function NavDrawer() {
       <SheetTrigger>
         <Menu size={20} />
       </SheetTrigger>
-      <SheetContent side='top' className='min-h-[80%] flex flex-col'>
+      <SheetContent
+        side='top'
+        className='h-screen flex flex-col p-4'
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <SheetHeader>
           <SheetTitle>KindaVOD</SheetTitle>
         </SheetHeader>
-        <div className='w-full h-full py-4 flex-1 flex flex-col items-start gap-4'>
+        <div className='w-full h-full overflow-hidden p-1 flex-1 flex flex-col items-start gap-4'>
           <SearchInput fullWidth />
-          <NavLinks vertical />
+          <div className='w-full h-full flex-1 overflow-auto pr-1'>
+            <NavLinks vertical />
+          </div>
         </div>
         <SheetFooter>
           <Footer fullWidth />
