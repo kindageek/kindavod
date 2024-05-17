@@ -22,6 +22,7 @@ export default function VideoPlayer({
         Tip: use{' '}
         <Link
           href='https://getadblock.com/en/'
+          target='_blank'
           className='underline hover:text-white'
         >
           AdBlock
