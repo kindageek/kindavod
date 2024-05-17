@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Providers from './providers';
@@ -19,6 +19,11 @@ export const metadata: Metadata = {
     title: 'KindaVOD',
     description: 'Video on Demand by @kindadev',
   },
+};
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: 'device-width',
 };
 
 export default function RootLayout({
