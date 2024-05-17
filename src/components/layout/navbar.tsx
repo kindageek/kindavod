@@ -10,7 +10,7 @@ const SearchInput = dynamic(() => import('../search/search-input'), {
 
 export default function Navbar() {
   return (
-    <div className='w-screen sticky top-0 z-10 bg-[hsl(var(--background))]/50 shadow-lg'>
+    <div className='w-screen sticky top-0 z-10 bg-[hsl(var(--background))]/50 shadow-lg backdrop-blur'>
       <div className='container flex justify-between items-center gap-4 py-4'>
         <div className='flex items-center gap-4'>
           <Link

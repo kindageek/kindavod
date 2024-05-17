@@ -83,7 +83,7 @@ function NavLinkGroup({
   return (
     <>
       <div className='hidden md:flex'>
-        <NavigationMenuTrigger className='pl-0 [&_svg]:ml-0'>
+        <NavigationMenuTrigger className='bg-transparent pl-0 [&_svg]:ml-0'>
           <NavLink href={href} label={label} />
         </NavigationMenuTrigger>
         <NavigationMenuContent>
