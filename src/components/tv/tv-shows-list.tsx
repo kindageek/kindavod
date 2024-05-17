@@ -47,8 +47,12 @@ export default function TvShowsList() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-between h-full w-full gap-8'>
-      <Tabs value={tab} onValueChange={onTabChange}>
+    <div className='flex flex-col items-center justify-between h-full w-full gap-4 sm:gap-8'>
+      <Tabs
+        value={tab}
+        onValueChange={onTabChange}
+        className='max-sm:w-full max-sm:overflow-auto'
+      >
         <TabsList>
           {TABS.map((tab) => (
             <TabsTrigger key={tab.id} value={tab.id}>

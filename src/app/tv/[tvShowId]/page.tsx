@@ -72,7 +72,7 @@ export default async function MoviePage({
   }
 
   return (
-    <div className='container flex flex-col items-start p-5 gap-8'>
+    <div className='container flex flex-col items-start py-4 md:py-10 gap-4 sm:gap-8 max-md:px-4'>
       <BackButtonLink />
       <img
         className='w-screen h-screen object-cover fixed top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
@@ -82,7 +82,7 @@ export default async function MoviePage({
       <div className='flex flex-col items-center w-full'>
         <div className='flex flex-col items-center w-full max-w-screen-lg'>
           <div className='flex flex-col gap-10'>
-            <div className='flex items-start justify-center gap-4'>
+            <div className='flex flex-col sm:flex-row items-center sm:items-start sm:justify-center gap-4'>
               <div className='relative min-w-40 md:min-w-64 aspect-[2/3]'>
                 <Image
                   fill

@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import TmdbLogo from '@/assets/logos/tmdb.svg';
+import { cn } from '@/lib/utils';
 
-export default function Footer() {
+export default function Footer({ fullWidth = false }: { fullWidth?: boolean }) {
   return (
-    <footer className='w-screen'>
+    <footer className={cn({ 'w-screen': !fullWidth, 'w-full': fullWidth })}>
       <div className='container py-4 flex flex-col sm:flex-row gap-4 items-center justify-between text-xs text-slate-50/50'>
         <div className='flex flex-col gap-2 text-center md:text-left'>
           <p>© {new Date().getFullYear()} KindaVOD</p>

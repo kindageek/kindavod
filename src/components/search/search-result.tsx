@@ -24,7 +24,7 @@ export default function SearchResult() {
   }, [data]);
 
   return (
-    <div className='flex flex-col items-center justify-between h-full w-full gap-8'>
+    <div className='flex flex-col items-center justify-between h-full w-full gap-4 sm:gap-8'>
       <VodPagination
         baseUrl={`/search?q=${query}`}
         paramPrefix='&'

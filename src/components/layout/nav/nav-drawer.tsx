@@ -1,3 +1,4 @@
+'use client';
 import {
   Sheet,
   SheetContent,
@@ -10,10 +11,20 @@ import { Menu } from 'lucide-react';
 import NavLinks from './nav-links';
 import SearchInput from '@/components/search/search-input';
 import Footer from '../footer';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function NavDrawer() {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    setOpen(false);
+  }, [pathname]);
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <Menu size={20} />
       </SheetTrigger>
@@ -26,7 +37,7 @@ export default function NavDrawer() {
           <NavLinks vertical />
         </div>
         <SheetFooter>
-          <Footer />
+          <Footer fullWidth />
         </SheetFooter>
       </SheetContent>
     </Sheet>

@@ -43,11 +43,11 @@ export default function TrendingCarousel() {
   });
 
   return (
-    <div className='flex flex-col gap-4 w-full px-12'>
+    <div className='flex flex-col gap-4 w-full px-10 md:px-12'>
       <Tabs defaultValue='movies'>
-        <div className='flex justify-between items-center gap-4'>
-          <h2 className='text-xl font-bold'>Trending</h2>
-          <TabsList className='mb-2'>
+        <div className='flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4 mb-2'>
+          <h2 className='text-base md:text-xl font-bold'>Trending</h2>
+          <TabsList>
             <TabsTrigger value='movies'>Movies</TabsTrigger>
             <TabsTrigger value='tvShows'>TV Shows</TabsTrigger>
           </TabsList>
