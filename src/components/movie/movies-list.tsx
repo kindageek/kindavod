@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Skeleton } from '@/components/ui/skeleton';
 import VodPagination from '@/components/vod-pagination';
 import MovieListCard from './movie-list-card';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import TabSelect from '../tab-select';
 
 const TABS = [
   {
@@ -48,19 +48,7 @@ export default function MoviesList() {
 
   return (
     <div className='flex flex-col items-center justify-between h-full w-full gap-4 sm:gap-8'>
-      <Tabs
-        value={tab}
-        onValueChange={onTabChange}
-        className='max-sm:w-full max-sm:overflow-auto'
-      >
-        <TabsList>
-          {TABS.map((tab) => (
-            <TabsTrigger key={tab.id} value={tab.id}>
-              {tab.name}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
+      <TabSelect tabs={TABS} tabId={tab} onTabChange={onTabChange} />
       <VodPagination
         baseUrl={`/movies?tab=${tab}`}
         paramPrefix='&'
