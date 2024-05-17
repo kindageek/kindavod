@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { buttonVariants } from '../../ui/button';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 
 const NAV_LINKS: {
   href: string;
@@ -52,19 +52,21 @@ export default function NavLinks({ vertical = false }: { vertical?: boolean }) {
       <NavigationMenuList
         className={cn({ 'w-full flex-col items-start gap-4': vertical })}
       >
-        {NAV_LINKS.map(({ href, label, children = [] }) => (
-          <NavigationMenuItem
-            key={href}
-            className={cn({ '!m-0 w-full': vertical })}
-          >
-            {children.length ? (
-              // eslint-disable-next-line react/no-children-prop
-              <NavLinkGroup href={href} label={label} children={children} />
-            ) : (
-              <NavLink href={href} label={label} />
-            )}
-          </NavigationMenuItem>
-        ))}
+        <Suspense fallback={<>Loading...</>}>
+          {NAV_LINKS.map(({ href, label, children = [] }) => (
+            <NavigationMenuItem
+              key={href}
+              className={cn({ '!m-0 w-full': vertical })}
+            >
+              {children.length ? (
+                // eslint-disable-next-line react/no-children-prop
+                <NavLinkGroup href={href} label={label} children={children} />
+              ) : (
+                <NavLink href={href} label={label} />
+              )}
+            </NavigationMenuItem>
+          ))}
+        </Suspense>
         <NavigationMenuIndicator />
       </NavigationMenuList>
     </NavigationMenu>
