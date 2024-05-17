@@ -1,37 +1,22 @@
+import { DEFAULT_ERROR_MESSAGE } from '@/lib/constants';
 import { LatestItemsListResponse } from '@/types/vidsrc';
 
 export async function getLatestTvShows(params?: {
   page: number;
 }): Promise<LatestItemsListResponse | null> {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/tv/new`
-    );
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return null;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/tv/new`);
+  if (!res.ok) {
+    throw new Error(res.statusText || DEFAULT_ERROR_MESSAGE);
   }
+  return res.json();
 }
 
 export async function getRecentlyAddedTvShows(params?: {
   page: number;
 }): Promise<LatestItemsListResponse | null> {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/tv/add`
-    );
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return null;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/tv/add`);
+  if (!res.ok) {
+    throw new Error(res.statusText || DEFAULT_ERROR_MESSAGE);
   }
+  return res.json();
 }

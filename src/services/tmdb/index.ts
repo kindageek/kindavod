@@ -6,25 +6,14 @@ export async function getSearchResult(params: {
   page: number;
 }): Promise<SearchResult | null> {
   if (!params.query || !params.page) return null;
-  try {
-    const urlParams = new URLSearchParams({
-      ...params,
-      page: params.page.toString(),
-      type: 'multi',
-    }).toString();
-
-    const res = await fetch(
-      `${getBaseUrlPrefix()}/api/tmdb/search?${urlParams}`
-    );
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
+  const urlParams = new URLSearchParams({
+    ...params,
+    page: params.page.toString(),
+    type: 'multi',
+  }).toString();
+  const res = await fetch(`${getBaseUrlPrefix()}/api/tmdb/search?${urlParams}`);
+  if (!res.ok) {
+    throw new Error(res.statusText);
   }
+  return res.json();
 }

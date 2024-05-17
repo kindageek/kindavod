@@ -1,4 +1,4 @@
-import { DEFAULT_LANGUAGE } from '@/lib/constants';
+import { DEFAULT_ERROR_MESSAGE, DEFAULT_LANGUAGE } from '@/lib/constants';
 
 const DEFAULT_PARAMS = {
   language: DEFAULT_LANGUAGE,
@@ -22,7 +22,7 @@ export async function GET(request: Request) {
   );
 
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error(res.statusText || DEFAULT_ERROR_MESSAGE);
   }
 
   const data = await res.json();

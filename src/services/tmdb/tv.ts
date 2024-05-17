@@ -5,60 +5,36 @@ export async function getTvShows(params: {
   page: number;
   category: string;
 }): Promise<TvShowListResponse | null> {
-  try {
-    const res = await fetch(
-      `${getBaseUrlPrefix()}/api/tmdb/tv?category=${params.category}&page=${
-        params.page
-      }`
-    );
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
+  const res = await fetch(
+    `${getBaseUrlPrefix()}/api/tmdb/tv?category=${params.category}&page=${
+      params.page
+    }`
+  );
+  if (!res.ok) {
+    throw new Error(res.statusText);
   }
+  return res.json();
 }
 
 export async function getTvShowDetailsById(
   tvShowId: string
 ): Promise<TvShowDetails | null> {
-  try {
-    if (!tvShowId) return null;
-
-    const res = await fetch(`${getBaseUrlPrefix()}/api/tmdb/tv/${tvShowId}`);
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
+  if (!tvShowId) throw new Error('Invalid ID');
+  const res = await fetch(`${getBaseUrlPrefix()}/api/tmdb/tv/${tvShowId}`);
+  if (!res.ok) {
+    throw new Error(res.statusText);
   }
+  return res.json();
 }
 
 export async function getTrendingTvShows(params: {
   page: number;
 }): Promise<TvShowListResponse | null> {
-  try {
-    const res = await fetch(
-      `${getBaseUrlPrefix()}/api/tmdb/tv/trending?page=${params.page}`
-    );
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch data');
-    }
-
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
+  const res = await fetch(
+    `${getBaseUrlPrefix()}/api/tmdb/tv/trending?page=${params.page}`
+  );
+  if (!res.ok) {
+    throw new Error(res.statusText);
   }
+  return res.json();
 }
