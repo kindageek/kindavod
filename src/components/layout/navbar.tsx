@@ -1,32 +1,14 @@
 'use client';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from '@/components/ui/navigation-menu';
 import Link from 'next/link';
-import { buttonVariants } from '../ui/button';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
+import NavLinks from './nav/nav-links';
+import NavDrawer from './nav/nav-drawer';
 
 const SearchInput = dynamic(() => import('../search/search-input'), {
   ssr: false,
 });
 
-const NAV_LINKS: {
-  href: string;
-  label: string;
-  disabled?: boolean;
-}[] = [
-  { href: '/', label: 'Home' },
-  { href: '/movies', label: 'Movies' },
-  { href: '/tv', label: 'TV Shows' },
-];
-
 export default function Navbar() {
-  const pathname = usePathname();
   return (
     <div className='w-screen sticky top-0 z-10 bg-[hsl(var(--background))]/50 shadow-lg'>
       <div className='container flex justify-between items-center gap-4 py-4'>
@@ -38,34 +20,16 @@ export default function Navbar() {
             <span>kinda</span>
             <span className='font-bold tracking-widest'>VOD</span>
           </Link>
-          <NavigationMenu>
-            <NavigationMenuList>
-              {NAV_LINKS.map(({ href, label, disabled = false }) => (
-                <NavigationMenuItem key={href}>
-                  <Link
-                    href={href}
-                    legacyBehavior
-                    passHref
-                    tabIndex={disabled ? -1 : undefined}
-                  >
-                    <NavigationMenuLink
-                      active={pathname === href}
-                      className={cn(buttonVariants({ variant: 'link' }), {
-                        underline:
-                          (pathname === href && href === '/') ||
-                          (pathname.startsWith(href) && href !== '/'),
-                        'pointer-events-none opacity-50': disabled,
-                      })}
-                    >
-                      {label}
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+          <div className='hidden md:flex'>
+            <NavLinks />
+          </div>
         </div>
-        <SearchInput />
+        <div className='hidden md:flex'>
+          <SearchInput />
+        </div>
+        <div className='md:hidden'>
+          <NavDrawer />
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,11 @@ import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 
-export default function SearchInput() {
+export default function SearchInput({
+  fullWidth = false,
+}: {
+  fullWidth?: boolean;
+}) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -37,7 +41,13 @@ export default function SearchInput() {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit} className='relative ml-auto flex-1 md:grow-0'>
+    <form
+      onSubmit={handleSubmit}
+      className={cn('relative', {
+        'ml-auto flex-1  md:grow-0': !fullWidth,
+        'w-full': fullWidth,
+      })}
+    >
       <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
       <Input
         ref={inputRef}
