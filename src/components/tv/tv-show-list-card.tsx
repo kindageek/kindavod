@@ -41,7 +41,7 @@ export default function TvShowListCard({ item }: { item: TvShowShortInfo }) {
         {data.imgUrl ? (
           <Image
             fill
-            objectFit='cover'
+            style={{ objectFit: 'cover' }}
             className='rounded'
             src={data.imgUrl}
             alt={data.title}

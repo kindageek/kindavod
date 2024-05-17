@@ -92,10 +92,10 @@ export default async function MoviePage({
                 <div className='relative min-w-40 md:min-w-64 aspect-[2/3]'>
                   <Image
                     fill
-                    objectFit='cover'
                     className='rounded-lg shadow'
                     src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${data.poster_path}`}
                     alt={data.title}
+                    style={{ objectFit: 'cover' }}
                   />
                 </div>
               )}

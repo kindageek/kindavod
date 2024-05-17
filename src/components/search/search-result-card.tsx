@@ -73,7 +73,7 @@ export default function SearchResultCard({ item }: { item: SearchResultItem }) {
         {data.imgUrl ? (
           <Image
             fill
-            objectFit='cover'
+            style={{ objectFit: 'cover' }}
             className='rounded'
             src={data.imgUrl}
             alt={data.title}

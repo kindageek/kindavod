@@ -41,7 +41,7 @@ export default function MovieListCard({ item }: { item: MovieShortInfo }) {
         {data.imgUrl ? (
           <Image
             fill
-            objectFit='cover'
+            style={{ objectFit: 'cover' }}
             className='rounded'
             src={data.imgUrl}
             alt={data.title}
