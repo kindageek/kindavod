@@ -75,7 +75,7 @@ export default async function MoviePage({
     <div className='container flex flex-col items-start py-4 md:py-10 gap-4 sm:gap-8 max-md:px-4'>
       <BackButtonLink />
       <img
-        className='w-screen h-screen object-cover fixed top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
+        className='w-screen h-dvh object-cover fixed top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
         src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${data.backdrop_path}`}
         alt={data.name}
       />

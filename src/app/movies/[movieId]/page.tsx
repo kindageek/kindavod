@@ -79,7 +79,7 @@ export default async function MoviePage({
       <BackButtonLink />
       {data.backdrop_path && (
         <img
-          className='w-screen h-screen object-cover fixed top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
+          className='w-screen h-dvh object-cover fixed top-0 left-0 right-0 z-[-1] filter blur-sm brightness-50'
           src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${data.backdrop_path}`}
           alt={data.title}
         />

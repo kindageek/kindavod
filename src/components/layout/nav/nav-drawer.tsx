@@ -30,7 +30,7 @@ export default function NavDrawer() {
       </SheetTrigger>
       <SheetContent
         side='top'
-        className='h-screen flex flex-col p-4'
+        className='h-dvh flex flex-col p-4'
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <SheetHeader>

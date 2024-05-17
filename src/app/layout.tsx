@@ -33,9 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className='dark'>
-      <body
-        className={cx(['flex flex-col h-full min-h-screen', inter.className])}
-      >
+      <body className={cx(['flex flex-col h-full min-h-dvh', inter.className])}>
         <Providers>
           <Navbar />
           <main className='flex-[1_1_100%] flex flex-col'>{children}</main>
