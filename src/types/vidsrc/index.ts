@@ -11,8 +11,5 @@ export interface LatestItem {
 
 export interface LatestItemsListResponse {
   status: number;
-  result: {
-    page: number;
-    items: LatestItem[];
-  };
+  result: LatestItem[];
 }

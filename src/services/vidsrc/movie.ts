@@ -5,7 +5,7 @@ export async function getLatestMovies(params?: {
   page: number;
 }): Promise<LatestItemsListResponse | null> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/movie/new`
+    `${process.env.NEXT_PUBLIC_VIDSRC_URL}/movies/latest/page-1.json`
   );
   if (!res.ok) {
     throw new Error(res.statusText || DEFAULT_ERROR_MESSAGE);
@@ -17,7 +17,7 @@ export async function getRecentlyAddedMovies(params?: {
   page: number;
 }): Promise<LatestItemsListResponse | null> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/movie/add`
+    `${process.env.NEXT_PUBLIC_VIDSRC_URL}/movies/latest/page-1.json`
   );
   if (!res.ok) {
     throw new Error(res.statusText || DEFAULT_ERROR_MESSAGE);

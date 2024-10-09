@@ -12,3 +12,11 @@ export function getBaseUrlPrefix() {
 
   return `${protocol}${process.env.NEXT_PUBLIC_VERCEL_URL}`;
 }
+
+export const isFulfilled = <T>(
+  p: PromiseSettledResult<T>
+): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
+
+export const isRejected = <T>(
+  p: PromiseSettledResult<T>
+): p is PromiseRejectedResult => p.status === 'rejected';

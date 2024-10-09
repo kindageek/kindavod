@@ -35,7 +35,9 @@ export default function TvShowsCarousel({
     queryFn: async () => {
       if (!data) return [];
       const res = await Promise.allSettled(
-        data.result.items.map((item) => getTvShowDetailsById(item.tmdb_id))
+        data.result
+          .slice(0, 10)
+          .map((item) => getTvShowDetailsById(item.tmdb_id))
       );
       const fulfilled = res.filter(
         (r) => r.status === 'fulfilled'

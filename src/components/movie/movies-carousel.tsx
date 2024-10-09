@@ -21,7 +21,9 @@ export default function MoviesCarousel({
     queryFn: async () => {
       if (!data) return [];
       const res = await Promise.allSettled(
-        data.result.items.map((movie) => getMovieDetailsById(movie.tmdb_id))
+        data.result
+          .slice(0, 10)
+          .map((movie) => getMovieDetailsById(movie.tmdb_id))
       );
       const fulfilled = res.filter(
         (r) => r.status === 'fulfilled'

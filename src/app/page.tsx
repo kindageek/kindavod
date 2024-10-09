@@ -12,8 +12,8 @@ export default async function Home() {
         <h2 className='text-base md:text-lg'>Video on Demand</h2>
       </div>
       <TrendingCarousel />
-      {/* <MoviesCarouselTabs />
-      <TvShowsCarouselTabs /> */}
+      <MoviesCarouselTabs />
+      <TvShowsCarouselTabs />
     </div>
   );
 }

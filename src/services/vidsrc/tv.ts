@@ -4,7 +4,9 @@ import { LatestItemsListResponse } from '@/types/vidsrc';
 export async function getLatestTvShows(params?: {
   page: number;
 }): Promise<LatestItemsListResponse | null> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/tv/new`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_VIDSRC_URL}/tvshows/latest/page-1.json`
+  );
   if (!res.ok) {
     throw new Error(res.statusText || DEFAULT_ERROR_MESSAGE);
   }
@@ -14,7 +16,9 @@ export async function getLatestTvShows(params?: {
 export async function getRecentlyAddedTvShows(params?: {
   page: number;
 }): Promise<LatestItemsListResponse | null> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_VIDSRC_URL}/vapi/tv/add`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_VIDSRC_URL}/tvshows/latest/page-1.json`
+  );
   if (!res.ok) {
     throw new Error(res.statusText || DEFAULT_ERROR_MESSAGE);
   }
