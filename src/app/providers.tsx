@@ -5,6 +5,7 @@
 // extracting this part out into it's own file with 'use client' on top
 import { PropsWithChildren, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from 'next-themes';
 
 function makeQueryClient() {
   return new QueryClient({
@@ -42,6 +43,13 @@ export default function Providers({ children }: PropsWithChildren<{}>) {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <ThemeProvider
+      attribute='class'
+      defaultTheme='system'
+      enableSystem
+      disableTransitionOnChange
+    >
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </ThemeProvider>
   );
 }

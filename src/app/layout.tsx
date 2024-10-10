@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className='dark'>
+    <html lang='en' suppressHydrationWarning>
       <body className={cx(['flex flex-col h-full min-h-dvh', inter.className])}>
         <Providers>
           <Navbar />

@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { Button } from '../ui/button';
 
 export default function SearchInput({
   fullWidth = false,
@@ -26,6 +27,7 @@ export default function SearchInput({
   const [isFocused, setIsFocused] = useState(false);
   const isMac = (navigator?.userAgent || '').toUpperCase().indexOf('MAC') >= 0;
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     if (window?.matchMedia) {
@@ -40,29 +42,65 @@ export default function SearchInput({
     () => window.removeEventListener('keydown', () => {});
   }, []);
 
+  const toggleSearchInput = () => {
+    if (isExpanded) return;
+    setIsExpanded(true);
+    inputRef.current?.focus();
+  };
+
+  const unfocusSearchInput = () => {
+    setIsExpanded(false);
+    setIsFocused(false);
+    inputRef.current?.blur();
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
-      className={cn('relative', {
-        'ml-auto flex-1  md:grow-0': !fullWidth,
+      className={cn('relative transition-all duration-300 flex items-center', {
+        'flex-1 md:grow-0': !fullWidth,
         'w-full': fullWidth,
       })}
     >
-      <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
+      <Button
+        variant='ghost'
+        size='icon'
+        title='Search'
+        type={isExpanded || fullWidth ? 'submit' : 'button'}
+        onClick={toggleSearchInput}
+        className={cn('h-4 w-4 hover:bg-transparent', {
+          'absolute left-2.5 top-1/2 translate-y-[-50%] h4':
+            isExpanded || fullWidth,
+        })}
+      >
+        <Search className='h-4 w-4' />
+      </Button>
       <Input
         ref={inputRef}
+        autoComplete='off'
         onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onBlur={unfocusSearchInput}
         name='kindavod-search'
         type='search'
         placeholder='Search...'
         className={cn(
-          'w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]',
-          { 'lg:pr-8': !isTouchDevice }
+          'transition-all duration-300 overflow-hidden py-1 md:py-2 h-8 md:h-10',
+          { 'lg:pr-8': !isTouchDevice && fullWidth },
+          {
+            'rounded-lg bg-background pl-8 w-full md:w-[200px] lg:w-[336px]':
+              isExpanded || fullWidth,
+          },
+          { 'w-0 border-none p-0': !isExpanded && !fullWidth }
         )}
+        tabIndex={isExpanded ? 0 : -1}
       />
       {!isTouchDevice && (
-        <kbd className='absolute right-2.5 top-[50%] translate-y-[-50%] hidden lg:flex items-center text-sm font-sans font-medium text-slate-400'>
+        <kbd
+          className={cn(
+            'absolute right-2.5 top-1/2 translate-y-[-50%] hidden lg:flex items-center text-sm font-sans font-medium text-slate-400 transition-all duration-300 overflow-hidden',
+            { 'w-0': !isExpanded && !fullWidth }
+          )}
+        >
           {isFocused ? '↵' : isMac ? '⌘ + K' : 'Ctrl + K'}
         </kbd>
       )}

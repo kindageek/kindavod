@@ -3,19 +3,28 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import NavLinks from './nav/nav-links';
 import NavDrawer from './nav/nav-drawer';
+import useScrollPosition from '@/hooks/useScrollPosition';
+import { cn } from '@/lib/utils';
+import { ThemeToggle } from './nav/theme-toggle';
 
 const SearchInput = dynamic(() => import('../search/search-input'), {
   ssr: false,
 });
 
 export default function Navbar() {
+  const { scrollPosition } = useScrollPosition();
   return (
-    <div className='w-screen sticky top-0 z-10 bg-[hsl(var(--background))]/50 shadow-lg backdrop-blur'>
-      <div className='container flex justify-between items-center gap-4 py-4'>
-        <div className='flex items-center gap-4'>
+    <div
+      className={cn('w-screen sticky top-0 z-10', {
+        'bg-[hsl(var(--background))]/50 shadow-lg backdrop-blur':
+          scrollPosition > 0,
+      })}
+    >
+      <div className='flex justify-between items-center gap-4 py-4 px-[4vw]'>
+        <div className='flex items-center gap-10'>
           <Link
             href='/'
-            className='flex flex-col leading-none text-center text-xl'
+            className='flex flex-col !leading-none text-center text-foreground text-base md:text-xl'
           >
             <span>kinda</span>
             <span className='font-bold tracking-widest'>VOD</span>
@@ -24,11 +33,12 @@ export default function Navbar() {
             <NavLinks />
           </div>
         </div>
-        <div className='hidden md:flex'>
+        <div className='flex items-center gap-5'>
           <SearchInput />
-        </div>
-        <div className='md:hidden'>
-          <NavDrawer />
+          <ThemeToggle />
+          <div className='md:hidden flex items-center'>
+            <NavDrawer />
+          </div>
         </div>
       </div>
     </div>

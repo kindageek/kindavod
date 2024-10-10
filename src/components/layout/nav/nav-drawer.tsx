@@ -29,7 +29,7 @@ export default function NavDrawer() {
         <Menu size={20} />
       </SheetTrigger>
       <SheetContent
-        side='top'
+        side='right'
         className='h-dvh flex flex-col p-4'
         onOpenAutoFocus={(e) => e.preventDefault()}
       >

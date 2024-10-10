@@ -5,13 +5,20 @@ import { cn } from '@/lib/utils';
 export default function Footer({ fullWidth = false }: { fullWidth?: boolean }) {
   return (
     <footer className={cn({ 'w-screen': !fullWidth, 'w-full': fullWidth })}>
-      <div className='container py-4 flex flex-col sm:flex-row gap-4 items-center justify-between text-xs text-slate-50/50'>
+      <div
+        className={cn(
+          'flex gap-4 items-center justify-between text-xs text-slate-50/50',
+          { 'py-4 px-[4vw]': !fullWidth }
+        )}
+      >
         <div className='flex flex-col gap-2 text-center md:text-left'>
-          <p>© {new Date().getFullYear()} KindaVOD</p>
+          <p className='text-xs sm:text-sm'>
+            © {new Date().getFullYear()} KindaVOD
+          </p>
         </div>
         <div className='flex items-center gap-1'>
           <Image src={TmdbLogo.src} width={32} height={32} alt='TMDB Logo' />
-          <p className='text-[8px] text-slate-50/25 block w-44 leading-none'>
+          <p className='text-[8px] text-slate-50/25 sm:block w-44 leading-none max-sm:sr-only'>
             This website uses TMDB and the TMDB APIs but is not endorsed,
             certified, or otherwise approved by TMDB.
           </p>
