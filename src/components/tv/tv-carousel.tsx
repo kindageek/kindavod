@@ -16,7 +16,7 @@ import { MovieDetails } from '@/types/tmdb/movie';
 import Image from 'next/image';
 import { getTvShowDetailsById } from '@/services/tmdb/tv';
 import { TvShowDetails } from '@/types/tmdb/tv';
-import CarouselCards, { CarouselCardInfo } from '../carousel-cards';
+import CarouselCards, { CarouselCardInfo } from '../carousels/carousel-cards';
 
 const POSTER_SIZES = { width: 144, height: 216 };
 

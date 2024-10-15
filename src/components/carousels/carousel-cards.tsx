@@ -7,19 +7,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { Skeleton } from './ui/skeleton';
+import { type CarouselApi } from '@/components/ui/carousel';
+import { Skeleton } from '../ui/skeleton';
 import Image from 'next/image';
-import CardPlayerIndicator from './card-player-indicator';
-import { useState } from 'react';
-import useCardIndicator from '@/hooks/useCardIndicator';
-import { cn } from '@/lib/utils';
+import React from 'react';
 
-const POSTER_SIZES = { width: 144, height: 216 };
+const POSTER_SIZES = { width: 250, height: 375 };
 
 export interface CarouselCardInfo {
   id: number;
   title: string;
-  date: string;
   imgUrl: string;
   url: string;
   type: 'movie' | 'tv';
@@ -32,12 +29,32 @@ export default function CarouselCards({
   data: CarouselCardInfo[];
   loading: boolean;
 }) {
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on('select', () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
   return (
     <Carousel
       opts={{
         align: 'start',
         loop: true,
+        slidesToScroll: 'auto',
       }}
+      setApi={setApi}
+      className='w-full relative'
     >
       <CarouselContent>
         {loading &&
@@ -56,10 +73,6 @@ export default function CarouselCards({
                   }}
                   className='rounded'
                 />
-                <div className='w-full flex flex-col text-center p-0.5 gap-1'>
-                  <Skeleton className='w-full h-4' />
-                  <Skeleton className='w-full h-4' />
-                </div>
               </div>
             </CarouselItem>
           ))}
@@ -70,26 +83,18 @@ export default function CarouselCards({
             </CarouselItem>
           ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className='absolute left-0 top-1/2 translate-y-[-50%] border-none bg-transparent rounded-none h-full hover:bg-black/50 opacity-0 hover:opacity-100 transition-all duration-300' />
+      <CarouselNext className='absolute right-0 top-1/2 translate-y-[-50%] border-none bg-transparent rounded-none h-full hover:bg-black/50 opacity-0 hover:opacity-100 transition-all duration-300' />
     </Carousel>
   );
 }
 
 function CarouselCard({ item }: { item: CarouselCardInfo }) {
-  const { indicatorStatus, handleCardHover, isHovering, handleCardUnhover } =
-    useCardIndicator({
-      id: item.id,
-      type: item.type,
-    });
-
   return (
     <Link
-      onMouseOver={handleCardHover}
-      onMouseLeave={handleCardUnhover}
       key={item.id}
       href={item.url}
-      className='group flex flex-col items-center gap-2 relative'
+      className='group flex flex-col items-center gap-2 relative w-full h-auto'
       style={{
         width: POSTER_SIZES.width,
         maxWidth: POSTER_SIZES.width,
@@ -101,20 +106,6 @@ function CarouselCard({ item }: { item: CarouselCardInfo }) {
         className='rounded group-hover:opacity-75 group-hover:scale-[1.025] transition-all duration-300 ease-in-out'
         src={item.imgUrl}
         alt={item.title}
-      />
-      <div
-        className='flex flex-col text-center p-0.5'
-        style={{
-          width: POSTER_SIZES.width,
-        }}
-      >
-        <p className='text-xs font-bold'>{item.title}</p>
-        <p className='text-xs'>{item.date}</p>
-      </div>
-      <CardPlayerIndicator
-        type={item.type}
-        status={indicatorStatus}
-        className={cn('absolute top-1 right-1', { hidden: !isHovering })}
       />
     </Link>
   );

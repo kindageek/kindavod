@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getMovieDetailsById } from '@/services/tmdb/movie';
 import { useEffect } from 'react';
 import { MovieDetails } from '@/types/tmdb/movie';
-import CarouselCards, { CarouselCardInfo } from '../carousel-cards';
+import CarouselCards, { CarouselCardInfo } from '../carousels/carousel-cards';
 
 export default function MoviesCarousel({
   data,

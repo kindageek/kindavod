@@ -1,0 +1,28 @@
+import CarouselCards, { CarouselCardInfo } from './carousel-cards';
+import { getMoviesByGenreId } from '@/services/tmdb';
+
+const GENRES = {
+  Comedy: '35',
+};
+
+type Genre = keyof typeof GENRES;
+
+export default async function GenreMoviesCarousel({ genre }: { genre: Genre }) {
+  const list = await getMoviesByGenreId(GENRES[genre]);
+  const data = list?.results.map((item) => ({
+    id: item.id,
+    title: item.title,
+    imgUrl: `${process.env.TMDB_IMAGE_URL}${item.poster_path}`,
+    url: `/${item.media_type === 'movie' ? 'movies' : 'tv'}/${item.id}`,
+    type: item.media_type,
+  })) as CarouselCardInfo[];
+
+  return (
+    <section className='flex flex-col gap-2 w-full'>
+      <h2 className='text-base md:text-xl font-bold text-secondary-foreground'>
+        Comedy Movies
+      </h2>
+      <CarouselCards data={data} loading={false} />
+    </section>
+  );
+}

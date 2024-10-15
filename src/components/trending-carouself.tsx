@@ -3,7 +3,7 @@ import { getTrendingMovies } from '@/services/tmdb/movie';
 import { getTrendingTvShows } from '@/services/tmdb/tv';
 import { useQuery } from '@tanstack/react-query';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import CarouselCards, { CarouselCardInfo } from './carousel-cards';
+import CarouselCards, { CarouselCardInfo } from './carousels/carousel-cards';
 
 export default function TrendingCarousel() {
   const { data: movies, isFetching: isMoviesFetching } = useQuery({
