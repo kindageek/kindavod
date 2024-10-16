@@ -1,53 +1,33 @@
 'use client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 export default function TabSelect({
   tabs,
-  tabId,
-  onTabChange,
 }: {
   tabs: { id: string; name: string }[];
-  tabId: string;
-  onTabChange: (tabId: string) => void;
 }) {
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const tab = searchParams.get('tab') || tabs[0].id;
+
+  function onTabChange(tabId: string) {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', '1');
+    params.set('tab', tabId);
+    replace(`${pathname}?${params.toString()}`);
+  }
+
   return (
-    <>
-      <Tabs
-        value={tabId}
-        onValueChange={onTabChange}
-        className='hidden sm:flex'
-      >
-        <TabsList>
-          {tabs.map((tab) => (
-            <TabsTrigger key={tab.id} value={tab.id}>
-              {tab.name}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
-      <div className='flex justify-end w-full sm:hidden'>
-        <Select value={tabId} onValueChange={onTabChange}>
-          <SelectTrigger className='w-40'>
-            <SelectValue aria-label={tabId}>
-              {tabs.find((t) => t.id === tabId)?.name}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            {tabs.map((tab) => (
-              <SelectItem key={tab.id} value={tab.id}>
-                {tab.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-    </>
+    <Tabs value={tab} onValueChange={onTabChange}>
+      <TabsList>
+        {tabs.map((tab) => (
+          <TabsTrigger key={tab.id} value={tab.id}>
+            {tab.name}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   );
 }
