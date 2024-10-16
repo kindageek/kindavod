@@ -19,6 +19,7 @@ export async function GET(request: Request) {
     `${process.env.NEXT_PUBLIC_TMDB_API_URL}/tv/${category}?${urlParams}`,
     {
       ...DEFAULT_REQUEST_OPTIONS,
+      cache: 'no-store',
     }
   );
 

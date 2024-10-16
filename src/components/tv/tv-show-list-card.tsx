@@ -1,12 +1,8 @@
-'use client';
 import { useMemo } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Clapperboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { TvShowShortInfo } from '@/types/tmdb/tv';
-import useCardIndicator from '@/hooks/useCardIndicator';
-import CardPlayerIndicator from '../card-player-indicator';
 
 export default function TvShowListCard({ item }: { item: TvShowShortInfo }) {
   const data = useMemo(() => {
@@ -21,16 +17,8 @@ export default function TvShowListCard({ item }: { item: TvShowShortInfo }) {
     };
   }, [item]);
 
-  const { indicatorStatus, handleCardHover, isHovering, handleCardUnhover } =
-    useCardIndicator({
-      id: item.id,
-      type: 'tv',
-    });
-
   return (
     <Link
-      onMouseOver={handleCardHover}
-      onMouseLeave={handleCardUnhover}
       key={data.id}
       href={data.url}
       className={cn(
@@ -39,10 +27,10 @@ export default function TvShowListCard({ item }: { item: TvShowShortInfo }) {
     >
       <div className='w-36 sm:w-40 md:w-48 lg:w-60 aspect-[2/3]'>
         {data.imgUrl ? (
-          <Image
-            fill
-            style={{ objectFit: 'cover' }}
-            className='rounded'
+          <img
+            loading='lazy'
+            decoding='async'
+            className='rounded w-full h-full object-cover'
             src={data.imgUrl}
             alt={data.title}
           />
@@ -56,12 +44,6 @@ export default function TvShowListCard({ item }: { item: TvShowShortInfo }) {
         <h2 className='text-xs sm:text-sm font-bold'>{data.title}</h2>
         <p className='text-xs'>{data.description}</p>
       </div>
-      <CardPlayerIndicator
-        type='tv'
-        size={24}
-        status={indicatorStatus}
-        className={cn('absolute top-1 right-1', { hidden: !isHovering })}
-      />
     </Link>
   );
 }
