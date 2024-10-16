@@ -54,7 +54,7 @@ export async function getTvShowsByCompanyId(
 
 export async function getTrendingList(): Promise<ITmdbListResponse | null> {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_TMDB_API_URL}/trending/all/day?language=en-US`,
+    `${process.env.NEXT_PUBLIC_TMDB_API_URL}/trending/all/week?language=en-US`,
     {
       headers: {
         Authorization: `Bearer ${process.env.TMDB_API_READ_ACCESS_TOKEN}`,
