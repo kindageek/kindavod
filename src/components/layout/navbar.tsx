@@ -15,10 +15,17 @@ export default function Navbar() {
   const { scrollPosition } = useScrollPosition();
   return (
     <div
-      className={cn('w-screen sticky top-0 z-10', {
-        'bg-[hsl(var(--background))]/50 shadow-lg backdrop-blur':
-          scrollPosition > 0,
-      })}
+      className={cn(
+        'w-screen sticky top-0 z-10 transition-default duration-500',
+        {
+          'bg-[hsl(var(--background))]/50 shadow-lg backdrop-blur':
+            scrollPosition > 0,
+        },
+        {
+          'bg-gradient-to-b from-[hsl(var(--background))]/70 from-10%':
+            scrollPosition === 0,
+        }
+      )}
     >
       <div className='flex justify-between items-center gap-4 py-4 px-[4vw]'>
         <div className='flex items-center gap-10'>

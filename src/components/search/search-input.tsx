@@ -68,12 +68,14 @@ export default function SearchInput({
         title='Search'
         type={isExpanded || fullWidth ? 'submit' : 'button'}
         onClick={toggleSearchInput}
-        className={cn('h-4 w-4 hover:bg-transparent', {
-          'absolute left-2.5 top-1/2 translate-y-[-50%] h4':
+        className={cn('size-4 md:size-6 hover:bg-transparent', {
+          'absolute left-2.5 top-1/2 translate-y-[-50%] size-4':
             isExpanded || fullWidth,
         })}
       >
-        <Search className='h-4 w-4' />
+        <Search
+          className={cn('size-6', { 'size-4': isExpanded || fullWidth })}
+        />
       </Button>
       <Input
         ref={inputRef}
