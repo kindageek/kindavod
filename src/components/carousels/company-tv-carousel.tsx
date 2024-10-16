@@ -16,7 +16,7 @@ export default async function CompanyTvCarousel({
   const list = await getTvShowsByCompanyId(COMPANIES[company]);
   const data = list?.results.map((item) => ({
     id: item.id,
-    title: item.title,
+    title: item.title ?? item.name,
     imgUrl: item?.poster_path
       ? `${process.env.TMDB_IMAGE_URL}${item.poster_path}`
       : '',

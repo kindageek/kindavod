@@ -5,8 +5,10 @@ export default async function PopularMoviesCarousel() {
   const list = await getPopularMovies();
   const data = list?.results.map((item) => ({
     id: item.id,
-    title: item.title,
-    imgUrl: `${process.env.TMDB_IMAGE_URL}${item.poster_path}`,
+    title: item.title ?? item.name,
+    imgUrl: item.poster_path
+      ? `${process.env.TMDB_IMAGE_URL}${item.poster_path}`
+      : '',
     url: `/${item.media_type === 'movie' ? 'movies' : 'tv'}/${item.id}`,
     type: item.media_type,
   })) as CarouselCardInfo[];
