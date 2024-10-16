@@ -17,7 +17,7 @@ const NAV_LINKS: {
 }[] = [
   { href: '/', label: 'Home' },
   {
-    href: '/movies',
+    href: '/movie',
     label: 'Movies',
   },
   {

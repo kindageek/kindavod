@@ -4,18 +4,10 @@ import { Button } from './ui/button';
 import { InfoIcon, PlayIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import { formatReleaseDate } from '@/lib/utils';
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
-}
-
-function formatReleaseDate(date: string) {
-  const year = new Date(date).getFullYear();
-  const monthName = new Date(date).toLocaleString('default', {
-    month: 'short',
-  });
-  const day = new Date(date).getDate();
-  return `${monthName} ${day}, ${year}`;
 }
 
 export default function Hero({
@@ -59,18 +51,18 @@ export default function Hero({
                   {Math.round(data?.vote_average * 10) ?? '-'}% Match
                 </p>
                 {data?.release_date && (
-                  <p className='text-secondary-300 text-xs lg:text-sm'>
+                  <p className='text-muted-foreground text-xs lg:text-sm'>
                     {formatReleaseDate(data.release_date)}
                   </p>
                 )}
                 {data?.first_air_date && (
-                  <p className='text-secondary-300 text-xs lg:text-sm'>
+                  <p className='text-muted-foreground text-xs lg:text-sm'>
                     {formatReleaseDate(data.first_air_date)}
                   </p>
                 )}
               </div>
               <div className='hidden md:block'>
-                <p className='text-secondary-300 text-xs sm:text-sm lg:text-base line-clamp-3'>
+                <p className='text-xs sm:text-sm lg:text-base line-clamp-3'>
                   {data.overview}
                 </p>
               </div>

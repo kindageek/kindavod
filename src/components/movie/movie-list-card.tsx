@@ -8,7 +8,7 @@ export default function MovieListCard({ item }: { item: MovieShortInfo }) {
   const data = useMemo(() => {
     return {
       id: item.id,
-      url: `/movies/${item.id}`,
+      url: `/movie/${item.id}`,
       title: item.title,
       description: new Date(item.release_date).getFullYear(),
       imgUrl: item.poster_path

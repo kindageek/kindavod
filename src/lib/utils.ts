@@ -20,3 +20,12 @@ export const isFulfilled = <T>(
 export const isRejected = <T>(
   p: PromiseSettledResult<T>
 ): p is PromiseRejectedResult => p.status === 'rejected';
+
+export function formatReleaseDate(date: string) {
+  const year = new Date(date).getFullYear();
+  const monthName = new Date(date).toLocaleString('default', {
+    month: 'short',
+  });
+  const day = new Date(date).getDate();
+  return `${monthName} ${day}, ${year}`;
+}

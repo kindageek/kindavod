@@ -5,18 +5,14 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Metadata, ResolvingMetadata } from 'next';
 import { getTvShowDetailsById } from '@/services/tmdb/tv';
+import { formatReleaseDate } from '@/lib/utils';
 
 export async function generateMetadata(
   { params }: { params: { tvShowId: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // read route params
   const tvShowId = params.tvShowId;
-
-  // fetch data
   const tvShow = await getTvShowDetailsById(tvShowId);
-
-  // optionally access and extend (rather than replace) parent metadata
   const parentMetadata = await parent;
   const previousImages = parentMetadata.openGraph?.images || [];
 
@@ -103,35 +99,45 @@ export default async function MoviePage({
                   </h1>
                 </Link>
                 {data.tagline && (
-                  <p className='text-sm md:text-base italic'>{data.tagline}</p>
+                  <p className='text-xs lg:text-sm italic'>{data.tagline}</p>
                 )}
-                {data.vote_average && (
-                  <p className='text-sm md:text-base'>
-                    <b>Rating:</b> {data.vote_average}/10 ({data.vote_count}{' '}
-                    votes)
-                  </p>
-                )}
-                <p className='text-sm md:text-base'>
-                  <b>Release:</b> {new Date(data.first_air_date).toDateString()}
+                <div className='flex items-center space-x-2 whitespace-nowrap'>
+                  {data.vote_average && (
+                    <p className='text-green-500 text-xs lg:text-sm'>
+                      {Math.round(data?.vote_average * 10) ?? '-'}% Match
+                    </p>
+                  )}
+                  {data?.first_air_date && (
+                    <p className='text-muted-foreground text-xs lg:text-sm'>
+                      {formatReleaseDate(data.first_air_date)}
+                    </p>
+                  )}
+                </div>
+                <p className='text-xs lg:text-sm'>
+                  <span className='text-muted-foreground font-semibold'>
+                    Genres:
+                  </span>{' '}
+                  {data.genres.map((c) => c.name).join(', ')}
                 </p>
-                {data.last_air_date && (
-                  <p className='text-sm md:text-base'>
-                    <b>Last episode:</b>{' '}
-                    {new Date(data.last_air_date).toDateString()}
-                  </p>
-                )}
-                <p className='text-sm md:text-base'>
-                  <b>Genres:</b> {data.genres.map((c) => c.name).join(', ')}
-                </p>
-                <p className='text-sm md:text-base'>
-                  <b>Counries:</b>{' '}
+                <p className='text-xs lg:text-sm'>
+                  <span className='text-muted-foreground font-semibold'>
+                    Counries:
+                  </span>{' '}
                   {data.production_countries.map((c) => c.name).join(', ')}
                 </p>
-                <p className='text-sm md:text-base'>
-                  <b>Seasons:</b> {data.number_of_seasons} (
-                  {data.number_of_episodes} episodes)
+                <p className='text-xs lg:text-sm'>
+                  <span className='text-muted-foreground font-semibold'>
+                    Companies:
+                  </span>{' '}
+                  {data.production_companies.map((c) => c.name).join(', ')}
                 </p>
-                <p className='text-sm md:text-base'>{data.overview}</p>
+                <p className='text-xs lg:text-sm'>
+                  <span className='text-muted-foreground font-semibold'>
+                    Seasons:
+                  </span>{' '}
+                  {data.number_of_seasons} ({data.number_of_episodes} episodes)
+                </p>
+                <p className='text-xs lg:text-sm'>{data.overview}</p>
               </div>
             </div>
             <VideoPlayer type='tv' id={tvShowId} />

@@ -42,7 +42,7 @@ export default function MoviesCarousel({
                 title: movie.title,
                 date: new Date(movie.release_date).getFullYear().toString(),
                 imgUrl: `${process.env.NEXT_PUBLIC_TMDB_IMAGE_URL}${movie.poster_path}`,
-                url: `/movies/${movie.id}`,
+                url: `/movie/${movie.id}`,
                 type: 'movie',
               }
             : null
