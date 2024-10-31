@@ -23,7 +23,7 @@ export const isRejected = <T>(
 
 export function formatReleaseDate(date: string) {
   const year = new Date(date).getFullYear();
-  const monthName = new Date(date).toLocaleString('default', {
+  const monthName = new Date(date).toLocaleString('en', {
     month: 'short',
   });
   const day = new Date(date).getDate();

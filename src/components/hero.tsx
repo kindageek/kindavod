@@ -15,11 +15,9 @@ export default function Hero({
 }: {
   list: ITmdbListResponseItem[] | undefined;
 }) {
-  const [randomIndex, setRandomIndex] = useState(
-    getRandomInt(list?.length || 0)
-  );
+  const [randomIndex, setRandomIndex] = useState<number | undefined>(undefined);
 
-  const data = useMemo(() => list?.at(randomIndex), [list, randomIndex]);
+  const data = useMemo(() => list?.at(randomIndex || 0), [list, randomIndex]);
 
   useEffect(() => {
     const interval = setInterval(() => {
