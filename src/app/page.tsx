@@ -5,8 +5,6 @@ import PopularMoviesCarousel from '@/components/carousels/popular-movies-carouse
 import Hero from '@/components/hero';
 import { getTrendingList } from '@/services/tmdb';
 
-export const dynamic = true;
-
 export default async function Home() {
   const trendingRes = await getTrendingList();
   const trendingList = trendingRes?.results.filter(
