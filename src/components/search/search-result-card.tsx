@@ -1,17 +1,10 @@
 'use client';
-import { getSearchResult } from '@/services/tmdb';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
-import VodPagination from '../vod-pagination';
-import { Skeleton } from '../ui/skeleton';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SearchResultItem } from '@/types/tmdb/search';
 import { Clapperboard, UserRound } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import useCardIndicator from '@/hooks/useCardIndicator';
-import CardPlayerIndicator from '../card-player-indicator';
 
 export default function SearchResultCard({ item }: { item: SearchResultItem }) {
   const data = useMemo(() => {
@@ -49,16 +42,8 @@ export default function SearchResultCard({ item }: { item: SearchResultItem }) {
     };
   }, [item]);
 
-  const { indicatorStatus, handleCardHover, isHovering, handleCardUnhover } =
-    useCardIndicator({
-      id: item.id,
-      type: item.media_type as 'movie' | 'tv',
-    });
-
   return (
     <Link
-      onMouseOver={handleCardHover}
-      onMouseLeave={handleCardUnhover}
       key={data.id}
       href={data.url}
       aria-disabled={data?.disabled}
@@ -92,14 +77,6 @@ export default function SearchResultCard({ item }: { item: SearchResultItem }) {
         <h2 className='text-xs sm:text-sm font-bold'>{data.title}</h2>
         <p className='text-xs'>{data.description}</p>
       </div>
-      {item.media_type !== 'person' && (
-        <CardPlayerIndicator
-          type={item.media_type}
-          size={24}
-          status={indicatorStatus}
-          className={cn('absolute top-1 right-1', { hidden: !isHovering })}
-        />
-      )}
     </Link>
   );
 }
