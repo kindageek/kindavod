@@ -14,9 +14,9 @@ const SearchInput = dynamic(() => import('../search/search-input'), {
 export default function Navbar() {
   const { scrollPosition } = useScrollPosition();
   return (
-    <div
+    <nav
       className={cn(
-        'w-screen sticky top-0 z-10 transition-default duration-500',
+        'w-screen fixed top-0 z-50 transition-default duration-500',
         {
           'bg-[hsl(var(--background))]/50 shadow-lg backdrop-blur':
             scrollPosition > 0,
@@ -48,6 +48,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
