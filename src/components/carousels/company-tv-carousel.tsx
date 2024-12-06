@@ -1,5 +1,5 @@
 import CarouselCards, { CarouselCardInfo } from './carousel-cards';
-import { ITmdbListResponse } from '@/services/tmdb';
+import { ITmdbListResponseShort } from '@/services/tmdb';
 
 export const COMPANIES = {
   Apple: '194232',
@@ -10,17 +10,17 @@ export default function CompanyTvCarousel({
   data,
   company,
 }: {
-  data: ITmdbListResponse | null;
+  data: ITmdbListResponseShort | null;
   company: string;
 }) {
   const list = data?.results.map((item) => ({
     id: item.id,
-    title: item.title ?? item.name,
+    title: item.title,
     imgUrl: item?.poster_path
       ? `${process.env.TMDB_IMAGE_URL}${item.poster_path}`
       : '',
-    url: `/${item.media_type === 'movie' ? 'movies' : 'tv'}/${item.id}`,
-    type: item.media_type,
+    url: `/tv/${item.id}`,
+    type: 'tv',
   })) as CarouselCardInfo[];
 
   return (

@@ -1,20 +1,20 @@
 import CarouselCards, { CarouselCardInfo } from './carousel-cards';
-import { ITmdbListResponse } from '@/services/tmdb';
+import { ITmdbTrendingListResponse } from '@/services/tmdb';
 
 export default function TrendingCarousel({
   data,
 }: {
-  data: ITmdbListResponse | null;
+  data: ITmdbTrendingListResponse | null;
 }) {
   const list = data?.results
     ?.filter((item) => item.vote_average > 7)
     .map((item) => ({
       id: item.id,
-      title: item.title ?? item.name,
+      title: item.media_type === 'movie' ? item.title : item.name,
       imgUrl: item.poster_path
         ? `${process.env.TMDB_IMAGE_URL}${item.poster_path}`
         : '',
-      url: `/${item.media_type === 'movie' ? 'movies' : 'tv'}/${item.id}`,
+      url: `/${item.media_type}/${item.id}`,
       type: item.media_type,
     })) as CarouselCardInfo[];
 

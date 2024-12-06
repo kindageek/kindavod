@@ -1,5 +1,5 @@
 'use client';
-import { ITmdbListResponse } from '@/services/tmdb';
+import { ITmdbTrendingListResponse } from '@/services/tmdb';
 import { Button } from './ui/button';
 import { InfoIcon, PlayIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -10,7 +10,11 @@ function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
-export default function Hero({ data }: { data: ITmdbListResponse | null }) {
+export default function Hero({
+  data,
+}: {
+  data: ITmdbTrendingListResponse | null;
+}) {
   const [randomIndex, setRandomIndex] = useState<number | undefined>(undefined);
   const list = useMemo(
     () => data?.results?.filter((item) => item.vote_average > 7) ?? [],
@@ -41,19 +45,19 @@ export default function Hero({ data }: { data: ITmdbListResponse | null }) {
         <div className='absolute inset-0'>
           <div className='absolute bottom-[35%] left-[4%] top-0 z-10 flex w-[50%] md:w-[36%] flex-col items-start justify-end gap-2 lg:gap-4'>
             <h1 className='text-lg sm:text-xl lg:text-5xl font-bold'>
-              {item.title ?? item.name}
+              {item.media_type === 'tv' ? item.name : item.title}
             </h1>
             <div className='flex flex-col items-start gap-1 lg:gap-2'>
               <div className='flex items-center space-x-2 whitespace-nowrap'>
                 <p className='text-green-500 text-xs lg:text-sm'>
                   {Math.round(item?.vote_average * 10) ?? '-'}% Match
                 </p>
-                {item?.release_date && (
+                {item.media_type === 'movie' && (
                   <p className='text-muted-foreground text-xs lg:text-sm'>
                     {formatReleaseDate(item.release_date)}
                   </p>
                 )}
-                {item?.first_air_date && (
+                {item.media_type === 'tv' && (
                   <p className='text-muted-foreground text-xs lg:text-sm'>
                     {formatReleaseDate(item.first_air_date)}
                   </p>

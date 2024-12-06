@@ -12,6 +12,7 @@ import {
   getPopularMovies,
   getTrendingList,
   getTvShowsByCompanyId,
+  ITmdbListResponse,
 } from '@/services/tmdb';
 
 export default async function Home() {
@@ -21,7 +22,7 @@ export default async function Home() {
     comedyListRes,
     appleTvListRes,
     netflixTvListRes,
-  ] = await Promise.all([
+  ] = await Promise.allSettled([
     getTrendingList(),
     getPopularMovies(),
     getMoviesByGenreId(GENRES['Comedy']),
@@ -30,12 +31,24 @@ export default async function Home() {
   ]);
   return (
     <div className='flex flex-col items-center pl-[4vw] pb-10 gap-[4vw]'>
-      <Hero data={trendingRes} />
-      <TrendingCarousel data={trendingRes} />
-      <GenreMoviesCarousel data={comedyListRes} />
-      <CompanyTvCarousel company='Apple' data={appleTvListRes} />
-      <PopularMoviesCarousel data={popularMoviesListRes} />
-      <CompanyTvCarousel company='Netflix' data={netflixTvListRes} />
+      {trendingRes.status === 'fulfilled' && (
+        <>
+          <Hero data={trendingRes.value} />
+          <TrendingCarousel data={trendingRes.value} />
+        </>
+      )}
+      {comedyListRes.status === 'fulfilled' && (
+        <GenreMoviesCarousel data={comedyListRes.value} />
+      )}
+      {appleTvListRes.status === 'fulfilled' && (
+        <CompanyTvCarousel company='Apple' data={appleTvListRes.value} />
+      )}
+      {popularMoviesListRes.status === 'fulfilled' && (
+        <PopularMoviesCarousel data={popularMoviesListRes.value} />
+      )}
+      {netflixTvListRes.status === 'fulfilled' && (
+        <CompanyTvCarousel company='Netflix' data={netflixTvListRes.value} />
+      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { getBaseUrlPrefix } from '@/lib/utils';
-import { SearchResult } from '@/types/tmdb/search';
+import { SearchResult, TMDBMediaType } from '@/types/tmdb/search';
 
 export async function getSearchResult(params: {
   query: string;
@@ -20,7 +20,7 @@ export async function getSearchResult(params: {
 
 export async function getMoviesByGenreId(
   genreId: string
-): Promise<ITmdbListResponse | null> {
+): Promise<ITmdbListResponseShort | null> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_API_URL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${genreId}`,
     {
@@ -37,7 +37,7 @@ export async function getMoviesByGenreId(
 
 export async function getTvShowsByCompanyId(
   companyId: string
-): Promise<ITmdbListResponse | null> {
+): Promise<ITmdbListResponseShort | null> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_API_URL}/discover/tv?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_companies=${companyId}`,
     {
@@ -52,7 +52,7 @@ export async function getTvShowsByCompanyId(
   return res.json();
 }
 
-export async function getTrendingList(): Promise<ITmdbListResponse | null> {
+export async function getTrendingList(): Promise<ITmdbTrendingListResponse | null> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_API_URL}/trending/all/week?language=en-US`,
     {
@@ -67,7 +67,7 @@ export async function getTrendingList(): Promise<ITmdbListResponse | null> {
   return res.json();
 }
 
-export async function getPopularMovies(): Promise<ITmdbListResponse | null> {
+export async function getPopularMovies(): Promise<ITmdbListResponseShort | null> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_TMDB_API_URL}/movie/popular?language=en-US`,
     {
@@ -85,6 +85,13 @@ export async function getPopularMovies(): Promise<ITmdbListResponse | null> {
 export interface ITmdbListResponse {
   page: number;
   results: ITmdbListResponseItem[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface ITmdbListResponseShort {
+  page: number;
+  results: ITmdbListResponseItemShort[];
   total_pages: number;
   total_results: number;
 }
@@ -109,4 +116,60 @@ export interface ITmdbListResponseItem {
   original_name?: string;
   first_air_date?: string;
   origin_country?: string[];
+}
+
+export interface ITmdbListResponseItemShort {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface ITmdbTrendingListResponse {
+  page: number;
+  results: ITmdbTrendingListItem[];
+  total_pages: number;
+  total_results: number;
+}
+
+export type ITmdbTrendingListItem =
+  | ITmdbTrendingListTvShow
+  | ITmdbTrendingListMovie;
+
+export interface ITmdbTrendingListItemBase {
+  backdrop_path: string;
+  id: number;
+  overview: string;
+  poster_path: string;
+  adult: boolean;
+  original_language: string;
+  genre_ids: number[];
+  popularity: number;
+  vote_average: number;
+  vote_count: number;
+}
+export interface ITmdbTrendingListTvShow extends ITmdbTrendingListItemBase {
+  media_type: 'tv';
+  name: string;
+  original_name: string;
+  first_air_date: string;
+  origin_country: string[];
+}
+
+export interface ITmdbTrendingListMovie extends ITmdbTrendingListItemBase {
+  media_type: 'movie';
+  title: string;
+  original_title: string;
+  release_date: string;
+  video: boolean;
 }
