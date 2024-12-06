@@ -41,11 +41,11 @@ export default function HomeLoadingPage() {
                 }}
               >
                 {Array.from({ length: 8 }).map((_, i) => (
-                  <div className='min-w-0 shrink-0 grow-0 pl-1 basis-1/8 py-0.5 rounded'>
-                    <Skeleton
-                      key={`${index}-${i}`}
-                      className='w-[130px] md:w-[180px] lg:w-[250px] aspect-[2/3] h-auto'
-                    />
+                  <div
+                    className='min-w-0 shrink-0 grow-0 pl-1 basis-1/8 py-0.5 rounded'
+                    key={`${index}-${i}`}
+                  >
+                    <Skeleton className='w-[130px] md:w-[180px] lg:w-[250px] aspect-[2/3] h-auto' />
                   </div>
                 ))}
               </div>
