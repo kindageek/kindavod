@@ -40,7 +40,7 @@ export default function MovieListCard({ item }: { item: MovieShortInfo }) {
           </div>
         )}
       </div>
-      <div className='flex flex-col text-center absolute bottom-0 backdrop-blur-[1px] w-full p-0.5 bg-gradient-to-b from-transparent to-slate-900 rounded-b'>
+      <div className='flex flex-col text-center absolute bottom-0 backdrop-blur-[1px] w-full p-0.5 bg-gradient-to-b from-transparent to-slate-900 rounded-b text-white'>
         <h2 className='text-xs sm:text-sm font-bold'>{data.title}</h2>
         <p className='text-xs'>{data.description}</p>
       </div>

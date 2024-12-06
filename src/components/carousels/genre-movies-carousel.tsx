@@ -1,15 +1,16 @@
 import CarouselCards, { CarouselCardInfo } from './carousel-cards';
-import { getMoviesByGenreId } from '@/services/tmdb';
+import { ITmdbListResponse } from '@/services/tmdb';
 
-const GENRES = {
+export const GENRES = {
   Comedy: '35',
 };
 
-type Genre = keyof typeof GENRES;
-
-export default async function GenreMoviesCarousel({ genre }: { genre: Genre }) {
-  const list = await getMoviesByGenreId(GENRES[genre]);
-  const data = list?.results.map((item) => ({
+export default function GenreMoviesCarousel({
+  data,
+}: {
+  data: ITmdbListResponse | null;
+}) {
+  const list = data?.results.map((item) => ({
     id: item.id,
     title: item.title ?? item.name,
     imgUrl: item.poster_path
@@ -24,7 +25,7 @@ export default async function GenreMoviesCarousel({ genre }: { genre: Genre }) {
       <h2 className='text-base md:text-xl font-bold text-secondary-foreground'>
         Comedy Movies
       </h2>
-      <CarouselCards data={data} loading={false} />
+      <CarouselCards data={list} loading={false} />
     </section>
   );
 }

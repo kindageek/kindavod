@@ -31,7 +31,7 @@ export default function MoviesList({
     <div className='flex flex-col items-center justify-between h-full w-full gap-4 sm:gap-8'>
       <TabSelect tabs={TABS} />
       <VodPagination
-        baseUrl={`/movies?tab=${tab}`}
+        baseUrl={`/movie?tab=${tab}`}
         paramPrefix='&'
         currentPage={page}
         totalPages={data?.total_pages}
@@ -43,7 +43,7 @@ export default function MoviesList({
           ))}
       </div>
       <VodPagination
-        baseUrl={`/movies?tab=${tab}`}
+        baseUrl={`/movie?tab=${tab}`}
         paramPrefix='&'
         currentPage={page}
         totalPages={data?.total_pages}

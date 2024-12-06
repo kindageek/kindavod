@@ -6,26 +6,25 @@ import NavDrawer from './nav/nav-drawer';
 import useScrollPosition from '@/hooks/useScrollPosition';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from './nav/theme-toggle';
+import { usePathname } from 'next/navigation';
 
 const SearchInput = dynamic(() => import('../search/search-input'), {
   ssr: false,
 });
 
 export default function Navbar() {
+  const pathname = usePathname();
   const { scrollPosition } = useScrollPosition();
   return (
     <nav
-      className={cn(
-        'w-screen fixed top-0 z-50 transition-default duration-500',
-        {
-          'bg-[hsl(var(--background))]/50 shadow-lg backdrop-blur':
-            scrollPosition > 0,
-        },
-        {
-          'bg-gradient-to-b from-[hsl(var(--background))]/70 from-10%':
-            scrollPosition === 0,
-        }
-      )}
+      className={cn('w-screen top-0 z-50 transition-default duration-500', {
+        fixed: pathname === '/',
+        sticky: pathname !== '/',
+        'bg-[hsl(var(--background))]/50 shadow-lg backdrop-blur':
+          scrollPosition > 0,
+        'bg-gradient-to-b from-[hsl(var(--background))]/70 from-10%':
+          scrollPosition === 0,
+      })}
     >
       <div className='flex justify-between items-center gap-4 py-4 px-[4vw]'>
         <div className='flex items-center gap-10'>

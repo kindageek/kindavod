@@ -1,20 +1,19 @@
 import CarouselCards, { CarouselCardInfo } from './carousel-cards';
-import { getTvShowsByCompanyId } from '@/services/tmdb';
+import { ITmdbListResponse } from '@/services/tmdb';
 
-const COMPANIES = {
+export const COMPANIES = {
   Apple: '194232',
   Netflix: '178464',
 } as const;
 
-type Company = keyof typeof COMPANIES;
-
-export default async function CompanyTvCarousel({
+export default function CompanyTvCarousel({
+  data,
   company,
 }: {
-  company: Company;
+  data: ITmdbListResponse | null;
+  company: string;
 }) {
-  const list = await getTvShowsByCompanyId(COMPANIES[company]);
-  const data = list?.results.map((item) => ({
+  const list = data?.results.map((item) => ({
     id: item.id,
     title: item.title ?? item.name,
     imgUrl: item?.poster_path
@@ -29,7 +28,7 @@ export default async function CompanyTvCarousel({
       <h2 className='text-base md:text-xl font-bold text-secondary-foreground'>
         {company} TV Shows
       </h2>
-      <CarouselCards data={data} loading={false} />
+      <CarouselCards data={list} loading={false} />
     </section>
   );
 }

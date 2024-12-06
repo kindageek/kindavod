@@ -1,9 +1,12 @@
 import CarouselCards, { CarouselCardInfo } from './carousel-cards';
-import { getPopularMovies } from '@/services/tmdb';
+import { ITmdbListResponse } from '@/services/tmdb';
 
-export default async function PopularMoviesCarousel() {
-  const list = await getPopularMovies();
-  const data = list?.results.map((item) => ({
+export default function PopularMoviesCarousel({
+  data,
+}: {
+  data: ITmdbListResponse | null;
+}) {
+  const list = data?.results.map((item) => ({
     id: item.id,
     title: item.title ?? item.name,
     imgUrl: item.poster_path
@@ -18,7 +21,7 @@ export default async function PopularMoviesCarousel() {
       <h2 className='text-base md:text-xl font-bold text-secondary-foreground'>
         Popular Movies
       </h2>
-      <CarouselCards data={data} loading={false} />
+      <CarouselCards data={list} loading={false} />
     </section>
   );
 }
