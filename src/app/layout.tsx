@@ -5,6 +5,7 @@ import Providers from './providers';
 import Navbar from '@/components/layout/navbar';
 import { cx } from 'class-variance-authority';
 import Footer from '@/components/layout/footer';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -39,6 +40,7 @@ export default function RootLayout({
           <main className='flex-[1_1_100%] flex flex-col'>{children}</main>
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

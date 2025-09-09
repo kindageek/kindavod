@@ -1,6 +1,6 @@
 # KindaVOD (Video on Demand)
 
-[View Demo](https://kindavod.vercel.app)
+[View Demo](https://vod.kindageek.dev)
 
 ## About The Project
 
